@@ -1,0 +1,5 @@
+msgid "Get Started"
+msgstr "Get Started in some other language"
+
+msgid "Resources"
+msgstr "Resources translated"

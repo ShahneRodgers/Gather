@@ -1,0 +1,6 @@
+<section class="home">
+  <h1><%= gettext "Welcome to %{name}!", name: "Gather" %></h1>
+  <p>A community focused website for everything that refugees need.</p>
+  <a class="btn btn-main" href="<%= Routes.authentication_path(@conn, :login) %>">Login</a>
+  <a class="btn btn-other" href="<% %>">Don't have an account?</a>
+</section>
