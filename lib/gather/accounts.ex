@@ -117,6 +117,8 @@ defmodule Gather.Accounts do
   Returns nil if the user does not exist.
   """
   def find_by_name(name) do
-    Repo.get_by(User, name: name)
+    Repo.all(from u in User,
+    where: u.name == ^name or u.nickname == ^name,
+    select: u)
   end
 end

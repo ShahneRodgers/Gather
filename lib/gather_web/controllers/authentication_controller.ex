@@ -8,27 +8,24 @@ defmodule GatherWeb.AuthenticationController do
 
   def login(conn, %{"username" => username, "password" => password}) do
     matching_user = Accounts.find_by_name(username)
+    |> IO.inspect()
+    |> Enum.find(fn user -> elem(Argon2.check_pass(user, password), 0) == :ok end)
 
-    Argon2.check_pass(matching_user, password)
-    |> password_response(conn, username, matching_user)
+    if matching_user do
+      Accounts.Guardian.Plug.sign_in(conn, matching_user)
+      |> redirect(to: Routes.user_path(conn, :profile))
+    else
+      fail_login(conn, username)
+    end
   end
 
   def login(conn, _) do
     render(conn, :login)
   end
 
-  defp password_response({:ok, _}, conn, _, matching_user) do
-    Accounts.Guardian.Plug.sign_in(conn, matching_user)
-    |> redirect(to: Routes.user_path(conn, :profile))
-  end
-
-  defp password_response({:error, _}, conn, username, _) do
-    fail_login(conn, username)
-  end
-
   def logout(conn, _) do
     Accounts.Guardian.Plug.sign_out(conn)
-    |> redirect(to: Routes.page_path(conn, :login))
+    |> redirect(to: Routes.page_path(conn, :index))
   end
 
   defp fail_login(conn, username) do

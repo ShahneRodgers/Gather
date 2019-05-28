@@ -1,7 +1,7 @@
-<h1><%= gettext "Hi, %{name}!", name: @user.name %></h1>
+<h1><%= gettext "Hi, %{name}!", name: @user.nickname || @user.name %></h1>
 <h2><%= gettext "Welcome to New Zealand!" %></h2>
 
-<%= form_for @changeset, Routes.user_path(@conn, :update, @user), fn f -> %>
+<%= form_for @changeset, Routes.user_path(@conn, :update_details), fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -22,13 +22,13 @@
 
   <div class="form-group">
     <%= label f, :password, class: "control-label" %>
-    <%= password_input f, :password, class: "form-control" %>
+    <%= password_input f, "password", class: "form-control" %>
     <%= error_tag f, :password %>
   </div>
 
   <div class="form-group">
     <%= label f, :arrival, class: "control-label" %>
-    <%= date_select f, :arrival, class: "form-control" %>
+    <%= date_select f, :arrival, year: [options: 1900..DateTime.utc_now.year()], class: "form-control" %>
     <%= error_tag f, :arrival %>
   </div>
 
@@ -39,6 +39,34 @@
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= label f, "Who did you arrive with?", class: "control-label" %>
+    <%= inputs_for f, :relationships, [append: [%Relationship{}]], fn fi -> %>
+      <%= hidden_input fi, :user_id, value: @user.id %>
+      <%= text_input fi, :type, class: "form-control" %>
+      <%= error_tag fi, :type %>
+      <%= text_input fi, :name, class: "form-control" %>
+      <%= error_tag fi, :name %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "English Language Proficiency", class: "control-label" %>
+    <%= number_input f, :english_level, class: "form-control" %>
+    <%= label f, "English school", class: "control-label" %>
+    <%= text_input f, :english_school, class: "form-control" %>
+    <%= error_tag f, :english %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, "Which languages do you speak?", class: "control-label" %>
+    <%= inputs_for f, :languages, [append: [%Language{}]], fn fi -> %>
+      <%= hidden_input fi, :user_id, value: @user.id %>
+      <%= text_input fi, :language, class: "form-control" %>
+      <%= error_tag fi, :language %>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Continue", class: "btn btn-primary" %>
   </div>
 <% end %>

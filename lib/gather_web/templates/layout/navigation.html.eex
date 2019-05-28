@@ -6,6 +6,13 @@
     <li><a href="<%= #Routes.services_path(@conn, :services)%>"><%= Gettext.gettext "Service Providers" %></a></li>
     <li><a href="<%= #Routes.events_path(@conn, :events)%>"><%= Gettext.gettext "What's on" %></a></li>
     <li><a href="<%= #Routes.info_path(@conn, :contact)%>"><%= Gettext.gettext "Contact" %></a></li>
-    <li><a href="<%= #Routes.users_path(@conn, :logout)%>"><%= Gettext.gettext "Logout" %></a></li>
+    
+    <li>
+    <%= if Guardian.Plug.current_resource(@conn) do %>
+        <a href="<%= Routes.authentication_path(@conn, :logout)%>"><%= Gettext.gettext "Logout" %></a>
+    <% else %>
+        <a href="<%= Routes.authentication_path(@conn, :login)%>" class="btn btn-main"><%= Gettext.gettext "Login" %></a>
+    <% end %>
+    </li>
     </ul>
 </nav>

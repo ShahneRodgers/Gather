@@ -27,6 +27,7 @@ defmodule GatherWeb.Router do
     pipe_through :maybe_authenticate
 
     get "/", PageController, :index
+    get "/logout", AuthenticationController, :logout
   end
 
   scope "/", GatherWeb do
@@ -42,6 +43,7 @@ defmodule GatherWeb.Router do
     pipe_through :authenticate
 
     get "/profile", UserController, :profile
+    put "/profile", UserController, :update_details
   end
 
   # Other scopes may use custom stacks.

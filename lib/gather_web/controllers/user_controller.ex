@@ -3,6 +3,7 @@ defmodule GatherWeb.UserController do
 
   alias Gather.Accounts
   alias Gather.Accounts.User
+  alias Gather.User.Details
 
   require Logger
 
@@ -40,6 +41,8 @@ defmodule GatherWeb.UserController do
 
   def profile(conn, _) do
     user = Guardian.Plug.current_resource(conn)
+           |> Details.load_user_details()
+           |> IO.inspect
     changeset = Accounts.change_user(user)
     render(conn, "profile.html", user: user, changeset: changeset)
   end
@@ -52,15 +55,70 @@ defmodule GatherWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Accounts.get_user!(id)
-
     case Accounts.update_user(user, user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User updated successfully.")
-        |> redirect(to: Routes.user_path(conn, :show, user))
+      {:ok, _} -> redirect(conn, to: Routes.user_path(conn, :index))
+      {:error, %Ecto.Changeset{} = changeset} -> render(conn, "edit.html", user: user, changeset: changeset)
+    end
+  end
 
+  def update_details(conn, %{"user" => user_params}) do
+    user = Guardian.Plug.current_resource(conn)
+          |> Details.load_user_details()
+
+    with {:ok, user} <- Accounts.update_user(user, user_params),
+          {:ok, _} <- update_languages(user, user_params),
+          {:ok, _} <- update_relationships(user, user_params)
+    do
+      IO.inspect(user)
+      redirect(conn, to: Routes.user_path(conn, :profile))
+    else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+        render(conn, "profile.html", user: user, changeset: changeset)
+      _ -> render(conn, "profile.html", user: user, changeset: Accounts.change_user(user))
+    end
+  end
+
+  defp update_languages(user, %{"languages" => language_params}=user_params) do
+    # FIXME: this should probably be done more efficiently
+    Enum.map(user.languages, &Details.delete_language/1)
+    if Enum.all?(Map.values(language_params), &store_language?/1) do
+      IO.puts("Updated languages")
+      {:ok, nil}
+    else
+      {:error, user_params}
+    end
+  end
+
+  defp store_language?(language) do
+    if language["language"] != "" do
+      case Details.create_language(language) do
+        {:ok, _} -> true
+        _ -> false
+      end
+    else
+      true
+    end
+  end
+
+  defp update_relationships(user, %{"relationships" => relationship_params}=user_params) do
+    # FIXME: this should probably be done more efficiently
+    Enum.map(user.relationships, &Details.delete_relationship/1)
+    if Enum.all?(Map.values(relationship_params), &store_relationship?/1) do
+      IO.puts("Updated relationships")
+      {:ok, nil}
+    else
+      {:error, user_params}
+    end
+  end
+
+  defp store_relationship?(relationship) do
+    if relationship["type"] != "" or relationship["name"] != "" do
+      case Details.create_relationship(relationship) do
+        {:ok, _} -> true
+        _ -> false
+      end
+    else
+      true
     end
   end
 
@@ -71,13 +129,13 @@ defmodule GatherWeb.UserController do
     Logger.info(fn ->
       current_user = Guardian.Plug.current_resource(conn)
 
-      "#{user.username} (#{user.user_id}) was deleted by #{current_user.username} (#{
+      "#{user.name} (#{user.id}) was deleted by #{current_user.name} (#{
         current_user.id
       })"
     end)
 
     conn
     |> put_flash(:info, "User deleted successfully.")
-    |> redirect(to: Routes.user_path(conn, :show))
+    |> redirect(to: Routes.user_path(conn, :index))
   end
 end
