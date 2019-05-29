@@ -50,6 +50,15 @@ defmodule Gather.Resources do
   end
 
   @doc """
+  Assign a category to a resource.
+  """
+  def create_resource_category(attrs \\ %{}) do
+    %Categories{}
+    |> Categories.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
   Updates a resource.
 
   ## Examples

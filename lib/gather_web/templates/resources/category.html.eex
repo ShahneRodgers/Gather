@@ -1,1 +1,9 @@
-<p>Category information to go here</p>
+<%= for resource <- @resources do %>
+    <div class="resource">
+        <div class="title"><%= resource.summary %></div>
+    </div>
+<% end %>
+
+<a href="<%= Routes.resources_path(@conn, :new) %>">
+    <%= gettext "Found a useful resource? Click here to share it" %>
+</a>

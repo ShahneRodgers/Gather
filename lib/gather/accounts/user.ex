@@ -21,8 +21,6 @@ defmodule Gather.Accounts.User do
 
   @doc false
   def changeset(user, %{"password" => password}=attrs) when password != "" do
-    IO.puts("Updating password")
-    IO.inspect(password)
     user
     |> cast(attrs, [:name, :email, :arrival, :region, :nickname, :is_leader, :english_level, :english_school])
     |> validate_required([:name])
@@ -31,7 +29,6 @@ defmodule Gather.Accounts.User do
 
   @doc false
   def changeset(%{password_hash: hash} = user, attrs) when not is_nil(hash) do
-    IO.puts("Existing hash")
     user
     |> cast(attrs, [:name, :email, :arrival, :region, :nickname, :is_leader, :english_level, :english_school])
     |> validate_required([:name, :email, :password_hash, :region])

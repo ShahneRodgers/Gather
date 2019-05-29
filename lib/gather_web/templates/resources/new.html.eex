@@ -1,0 +1,47 @@
+<h2>Share a resource</h2>
+
+<%= form_for @changeset, Routes.resources_path(@conn, :create), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :summary, class: "control-label" %>
+    <%= text_input f, :summary, class: "form-control" %>
+    <%= error_tag f, :summary %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :link, class: "control-label" %>
+    <%= url_input f, :link, class: "form-control" %>
+    <%= error_tag f, :link %>
+  </div>
+
+ <% # FIXME: select from a list of languages? %>
+  <div class="form-group">
+    <%= label f, :language, class: "control-label" %>
+    <%= text_input f, :language, class: "form-control" %>
+    <%= error_tag f, :language %>
+  </div>
+
+ <% # FIXME: select from a list of formats? %>
+  <div class="form-group">
+    <%= label f, :format, class: "control-label" %>
+    <%= text_input f, :format, class: "form-control" %>
+    <%= error_tag f, :format %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :category, class: "control-label" %>
+    <%= select f, :category, @categories, class: "form-control" %>
+    <%= error_tag f, :category %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<span><%= link "Back", to: Routes.resources_path(@conn, :index) %></span>

@@ -10,6 +10,9 @@ defmodule Gather.Resources.Resource do
     field :summary, :string
     field :user_id, :id
 
+    has_many(:categories, Gather.Resources.Categories)
+    has_many(:comments, Gather.Resources.Comments)
+
     timestamps()
   end
 
@@ -18,5 +21,6 @@ defmodule Gather.Resources.Resource do
     resource
     |> cast(attrs, [:link, :summary, :language, :format, :score, :user_id])
     |> validate_required([:link, :language, :format, :user_id])
+    |> foreign_key_constraint(:user_id)
   end
 end

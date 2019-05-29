@@ -25,9 +25,7 @@ defmodule GatherWeb.UserController do
           "#{inspect(user)} was created"
         end)
 
-        conn
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: Routes.user_path(conn, :index))
+        redirect(conn, to: Routes.user_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -42,7 +40,6 @@ defmodule GatherWeb.UserController do
   def profile(conn, _) do
     user = Guardian.Plug.current_resource(conn)
            |> Details.load_user_details()
-           |> IO.inspect
     changeset = Accounts.change_user(user)
     render(conn, "profile.html", user: user, changeset: changeset)
   end

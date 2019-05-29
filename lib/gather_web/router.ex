@@ -46,8 +46,8 @@ defmodule GatherWeb.Router do
 
     get "/start", TaskController, :index
 
-    get "/resources", ResourcesController, :index
-    post "/resources", ResourcesController, :search
+    post "/resources/search", ResourcesController, :search
+    resources "/resources", ResourcesController, only: [:index, :new, :create]
 
     get "/resources/category", ResourcesController, :category
   end

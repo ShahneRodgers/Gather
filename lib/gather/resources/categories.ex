@@ -12,8 +12,8 @@ defmodule Gather.Resources.Categories do
   @doc false
   def changeset(categories, attrs) do
     categories
-    |> cast(attrs, [:category, :user_id])
-    |> validate_required([:category, :user_id])
-    |> foreign_key_constraint(:user_id)
+    |> cast(attrs, [:category, :resource_id])
+    |> validate_required([:category, :resource_id])
+    |> foreign_key_constraint(:resource_id)
   end
 end
