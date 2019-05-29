@@ -1,30 +1,19 @@
-<h1>Listing Tasks</h1>
+<section class="start background2">
+  <h2><%= gettext "Getting started in New Zealand" %></h2>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Task</th>
-      <th>Completed</th>
-      <th>User</th>
+<ol>
+  <li><%= gettext "Arriving in New Zealand" %></li>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for task <- @tasks do %>
-    <tr>
-      <td><%= task.task %></td>
-      <td><%= task.completed %></td>
-      <td><%= task.user %></td>
+  <li><%= gettext "Housing in New Zealand" %></li>
 
-      <td>
-        <%= link "Show", to: Routes.task_path(@conn, :show, task) %>
-        <%= link "Edit", to: Routes.task_path(@conn, :edit, task) %>
-        <%= link "Delete", to: Routes.task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+  <li><%= gettext "Work" %></li>
 
-<span><%= link "New Task", to: Routes.task_path(@conn, :new) %></span>
+  <li><%= gettext "Education" %></li>
+
+  <li><%= gettext "Taking care of your health" %></li>
+
+  <li><%= gettext "Transport in New Zealand" %></li>
+
+  <li><%= gettext "Get in touch with family" %></li>
+</ol>

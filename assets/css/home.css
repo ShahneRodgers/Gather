@@ -1,0 +1,16 @@
+.home {
+    background-color: var(--main-bg-colour);
+    width: 100%;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-bottom: 12%;
+}
+
+.home h1 {
+    color: var(--text-light-colour);
+    font-weight: 900;
+}
+
+.home h3 {
+    color: var(--text-dark-colour);
+}

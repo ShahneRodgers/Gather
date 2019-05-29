@@ -33,7 +33,6 @@ defmodule GatherWeb.Router do
   scope "/", GatherWeb do
     pipe_through :browser
 
-    get "/start", TaskController, :index
     get "/login", AuthenticationController, :login
     post "/login", AuthenticationController, :login
     resources "/user", UserController
@@ -44,6 +43,13 @@ defmodule GatherWeb.Router do
 
     get "/profile", UserController, :profile
     put "/profile", UserController, :update_details
+
+    get "/start", TaskController, :index
+
+    get "/resources", ResourcesController, :index
+    post "/resources", ResourcesController, :search
+
+    get "/resources/category", ResourcesController, :category
   end
 
   # Other scopes may use custom stacks.

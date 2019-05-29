@@ -13,7 +13,8 @@ defmodule Gather.Tasks.Task do
   @doc false
   def changeset(task, attrs) do
     task
-    |> cast(attrs, [:task, :completed, :user])
-    |> validate_required([:task, :completed, :user])
+    |> cast(attrs, [:task, :completed, :user_id])
+    |> validate_required([:task, :completed, :user_id])
+    |> foreign_key_constraint(:user_id)
   end
 end

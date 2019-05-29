@@ -1,0 +1,87 @@
+section.background2 {
+    background-color: var(--secondary-bg-colour);
+    width: 100%;
+    padding-top: 5%;
+    padding-left: 7%;
+    padding-bottom: 5%;
+}
+
+section.background2 h2 {
+    color: white;
+    font-weight: bold;
+}
+
+.search-box {
+    border-radius: 10px;
+    background-color: white;
+    width: 60%;
+    height: 50px;
+    padding-left: 10px;
+    color: #000000;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 1.5em;
+}
+
+.search-box::placeholder{
+    color: var(--light-grey);
+}
+
+.btn.search-submit {
+    height: 47px;
+    width: 10%;
+}
+
+.gather-logo {
+    width: 150px;
+    max-width: 100%;
+}
+
+.gather-logo * {
+    max-width: 100%;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.btn {
+    border: none;
+    padding: 5px;
+    min-width: 80px;
+    min-height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 30px;
+    font-weight: 500;
+    height: 35px;
+}
+
+.btn-main {
+    background-color: var(--accent-colour);
+    color: white;
+}
+
+.btn-square {
+    border-radius: 10px;
+}
+
+.btn-other {
+    background-color: var(--light-grey);
+    color: black;
+}

@@ -121,4 +121,12 @@ defmodule Gather.Accounts do
     where: u.name == ^name or u.nickname == ^name,
     select: u)
   end
+
+  @doc """
+  Retrieves users for the specified user ids.
+  """
+  def find_users(ids) do
+    Repo.all(from u in User,
+    where: u.id in ^ids)
+  end
 end

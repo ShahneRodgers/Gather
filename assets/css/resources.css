@@ -1,0 +1,46 @@
+.resource-type {
+    background: none;
+    outline-color: white;
+    color: white;
+    width: 14%;
+    margin-top: 15px;
+    margin-left: 4px;
+    margin-right: 4px;
+    height: 30px;
+}
+
+.categories {
+    background-color: #fcf4e7;
+    box-sizing: unset;
+    padding-left: 7%;
+    padding-right: 7%;
+    display: inline-block;
+    text-align: center;
+}
+
+.categories h4 {
+    font-size: 3.6rem;
+    letter-spacing: 0.5rem;
+    line-height: 0;
+}
+
+.btn.category {
+    width: 20%;
+    height: 20%;
+    margin: 10px;
+    background-color: white;
+}
+
+.btn.category img {
+    width: 60%;
+    max-height: 70%;
+    min-height: 70%;
+    margin-top: 5px;
+}
+
+.btn.category p{
+    height: 20%;
+    min-height: 20%;
+    color: black;
+    letter-spacing: 0.1rem;
+}
