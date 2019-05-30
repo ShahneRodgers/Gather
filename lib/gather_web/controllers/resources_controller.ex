@@ -13,11 +13,13 @@ defmodule GatherWeb.ResourcesController do
     resources = Resources.list_resources()
     authors = Enum.map(resources, fn r -> r.user_id end)
               |> Accounts.find_users()
-              |> Enum.map(fn u -> if is_nil(u.nickname) or u.nickname == "", do: u.name, else: u.nickname end)
+              |> Enum.map(&Accounts.User.get_display_name/1)
               |> Enum.sort()
-    languages = Enum.map(resources, fn r -> r.language end)
+    languages = Enum.flat_map(resources, fn r -> Enum.map(r.languages, fn l -> l.language end) end)
+                |> Enum.uniq()
                 |> Enum.sort()
     formats = Enum.map(resources, fn r -> r.format end)
+              |> Enum.uniq()
               |> Enum.sort()
 
     render(conn, "index.html", resources: resources, categories: @categories, authors: authors, languages: languages, formats: formats)
@@ -37,15 +39,25 @@ defmodule GatherWeb.ResourcesController do
           "#{inspect(resource)} was created by #{user.id}"
         end)
         # FIXME: atomic add?
-        if Map.get(resource_params, "category") do
-          Resources.create_resource_category(Map.put(resource_params, "resource_id", resource.id))
+        if Map.get(resource_params, "categories") do
+          add_associations(resource_params["categories"], resource.id, &Resources.create_resource_category/1)
+        end
+
+        if (Map.get(resource_params, "languages")) do
+          add_associations(resource_params["languages"], resource.id, &Resources.create_resource_language/1)
         end
 
         redirect(conn, to: Routes.resources_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, categories: @categories)
     end
+  end
+
+  defp add_associations(params, resource_id, func) do
+    # FIXME: this should probably be done more efficiently
+    Enum.map(Map.values(params), fn param -> if param != "", do: func.(Map.put(param, "resource_id", resource_id)) end)
+    :ok
   end
 
   def search(conn, _params) do
@@ -54,6 +66,10 @@ defmodule GatherWeb.ResourcesController do
 
   def category(conn, %{"category" => category}) do
     resources = Resources.get_by_category(category)
-    render(conn, "category.html", resources: resources)
+    users = Enum.map(resources, fn r -> r.user_id end)
+            |> Accounts.find_users()
+            |> Map.new(fn user -> {user.id, Accounts.User.get_display_name(user)} end)
+
+    render(conn, "category.html", resources: resources, users: users)
   end
 end

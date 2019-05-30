@@ -36,6 +36,7 @@ defmodule GatherWeb.Router do
     get "/login", AuthenticationController, :login
     post "/login", AuthenticationController, :login
     resources "/user", UserController
+    get "/contact", PageController, :contact
   end
 
   scope "/", GatherWeb do

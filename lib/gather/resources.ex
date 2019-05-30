@@ -6,8 +6,8 @@ defmodule Gather.Resources do
   import Ecto.Query, warn: false
   alias Gather.Repo
 
-  alias Gather.Resources.Resource
-  alias Gather.Resources.Categories
+  alias Gather.Resources.{Resource, Categories, Comments, ResourceLanguages}
+  alias Gather.User.Details.Votes
 
   @doc """
   Returns the list of resources.
@@ -20,15 +20,18 @@ defmodule Gather.Resources do
   """
   def list_resources do
     Repo.all(from r in Resource,
-             order_by: r.score)
+            preload: [:languages])
   end
 
   def get_by_category(category) do
     Repo.all(from cat in Categories,
              where: cat.category == ^category,
              join: r in Resource, on: cat.resource_id == r.id,
-             select: r,
-             order_by: r)
+             select: r
+             #preload: [categories: r, comments: r, votes: r]
+             #order_by: r.score)
+    )
+    |> Repo.preload([:categories, :comments, :votes, :languages])
   end
 
   @doc """
@@ -55,6 +58,15 @@ defmodule Gather.Resources do
   def create_resource_category(attrs \\ %{}) do
     %Categories{}
     |> Categories.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Assign a language to a resource.
+  """
+  def create_resource_language(attrs \\ %{}) do
+    %ResourceLanguages{}
+    |> ResourceLanguages.changeset(attrs)
     |> Repo.insert()
   end
 

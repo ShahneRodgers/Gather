@@ -4,14 +4,15 @@ defmodule Gather.Resources.Resource do
 
   schema "resources" do
     field :format, :string
-    field :language, :string
     field :link, :string
-    field :score, :integer
+    field :title, :string
     field :summary, :string
     field :user_id, :id
 
     has_many(:categories, Gather.Resources.Categories)
     has_many(:comments, Gather.Resources.Comments)
+    has_many(:languages, Gather.Resources.ResourceLanguages)
+    has_many(:votes, Gather.User.Details.Votes)
 
     timestamps()
   end
@@ -19,8 +20,8 @@ defmodule Gather.Resources.Resource do
   @doc false
   def changeset(resource, attrs) do
     resource
-    |> cast(attrs, [:link, :summary, :language, :format, :score, :user_id])
-    |> validate_required([:link, :language, :format, :user_id])
+    |> cast(attrs, [:link, :title, :summary, :format, :user_id])
+    |> validate_required([:link, :title, :format, :user_id])
     |> foreign_key_constraint(:user_id)
   end
 end

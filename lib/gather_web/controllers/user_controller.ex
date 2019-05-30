@@ -41,7 +41,7 @@ defmodule GatherWeb.UserController do
     user = Guardian.Plug.current_resource(conn)
            |> Details.load_user_details()
     changeset = Accounts.change_user(user)
-    render(conn, "profile.html", user: user, changeset: changeset)
+    render(conn, "profile.html", user: user, changeset: changeset, regions: User.regions())
   end
 
   def edit(conn, %{"id" => id}) do
@@ -79,7 +79,6 @@ defmodule GatherWeb.UserController do
     # FIXME: this should probably be done more efficiently
     Enum.map(user.languages, &Details.delete_language/1)
     if Enum.all?(Map.values(language_params), &store_language?/1) do
-      IO.puts("Updated languages")
       {:ok, nil}
     else
       {:error, user_params}

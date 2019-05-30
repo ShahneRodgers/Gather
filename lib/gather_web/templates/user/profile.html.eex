@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <%= label f, :region, class: "control-label" %>
-    <%= select f, :region, ["Auckland": "Auckland", "Wellington": "Wellington"], class: "form-control" %>
+    <%= select f, :region, @regions, class: "form-control" %>
     <%= error_tag f, :region %>
   </div>
 

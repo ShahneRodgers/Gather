@@ -8,6 +8,12 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :summary, class: "control-label" %>
     <%= text_input f, :summary, class: "form-control" %>
     <%= error_tag f, :summary %>
@@ -21,9 +27,11 @@
 
  <% # FIXME: select from a list of languages? %>
   <div class="form-group">
-    <%= label f, :language, class: "control-label" %>
-    <%= text_input f, :language, class: "form-control" %>
-    <%= error_tag f, :language %>
+    <%= inputs_for f, :languages, [append: [%Gather.Resources.ResourceLanguages{}]], fn fi -> %>
+      <%= label fi, :language, class: "control-label" %>
+      <%= text_input fi, :language, class: "form-control" %>
+      <%= error_tag fi, :language %>
+    <% end %>
   </div>
 
  <% # FIXME: select from a list of formats? %>
@@ -34,9 +42,11 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :category, class: "control-label" %>
-    <%= select f, :category, @categories, class: "form-control" %>
-    <%= error_tag f, :category %>
+    <%= inputs_for f, :categories, [append: [%Gather.Resources.Categories{}]], fn fi -> %>
+      <%= label fi, :category, class: "control-label" %>
+      <%= select fi, :category, @categories, class: "form-control" %>
+      <%= error_tag fi, :category %>
+    <% end %>
   </div>
 
   <div class="form-group">

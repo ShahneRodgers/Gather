@@ -5,7 +5,7 @@
     <li><a href="<%= #Routes.communities_path(@conn, :communities)%>"><%= Gettext.gettext "Communities" %></a></li>
     <li><a href="<%= #Routes.services_path(@conn, :services)%>"><%= Gettext.gettext "Service Providers" %></a></li>
     <li><a href="<%= #Routes.events_path(@conn, :events)%>"><%= Gettext.gettext "What's on" %></a></li>
-    <li><a href="<%= #Routes.info_path(@conn, :contact)%>"><%= Gettext.gettext "Contact" %></a></li>
+    <li><a href="<%= Routes.page_path(@conn, :contact)%>"><%= Gettext.gettext "Contact" %></a></li>
     
     <li>
     <%= if Guardian.Plug.current_resource(@conn) do %>

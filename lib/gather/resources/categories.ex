@@ -4,7 +4,8 @@ defmodule Gather.Resources.Categories do
 
   schema "categories" do
     field :category, :string
-    field :resource_id, :id
+
+    belongs_to(:resource, Gather.Resources.Resource)
 
     timestamps()
   end

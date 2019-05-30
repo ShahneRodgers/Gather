@@ -19,6 +19,24 @@ defmodule Gather.Accounts.User do
     timestamps()
   end
 
+  def regions() do
+     [:Auckland, :Masterton, :Tauranga, :Dannevirke, :Napier, :Te_Kuiti, :Dargaville,
+    :New_Plymouth, :Thames, :Gisbourne, :Paihia, :Tokoroa, :Hamilton, :Palmerston_North,
+    :Wellington, :Hastings, :Paraparaumu, :Whakatane, :Kaitaia, :Rotorua, :Whanganui,
+    :Kerikeri, :Taumarunui, :Whangarei, :Levin, :Taupo, :Whitianga, :Alexandra,
+    :Milford_Sound, :Ashburton, :Motueka, :Blenheim, :Mount_Cook, :Christchurch, :Nelson,
+    :Dunedin, :Oamaru, :Gore, :Queenstown, :Greymouth, :Reefton, :Hokitika, :Timaru,
+    :Invercargill, :Wanaka, :Kaikoura, :Westport]
+  end
+
+  def get_display_name(user) do
+    if is_nil(user.nickname) or user.nickname == "" do
+      user.name
+    else
+      user.nickname
+    end
+  end
+
   @doc false
   def changeset(user, %{"password" => password}=attrs) when password != "" do
     user
@@ -47,14 +65,5 @@ defmodule Gather.Accounts.User do
 
   defp put_pass_hash(changeset, _) do
     changeset
-  end
-
-  @doc """
-  Gets a single user.
-
-  Returns nil if the user does not exist.
-  """
-  def get_user(id) do
-    Gather.Repo.get(User, id)
   end
 end

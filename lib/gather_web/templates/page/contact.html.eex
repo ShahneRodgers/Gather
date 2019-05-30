@@ -1,0 +1,42 @@
+<section class="contact background2">
+    <h2><%= gettext "Contact" %></h2>
+    <h3><%= gettext """
+                Are you a refugee who wants to access this site? 
+                Or do you just want to know more? Email us!
+                """ %></h3>
+    <div class="contact">
+    <%= form_for @conn, "mailto:bydefault-gather-support@gmail.com", [method: "GET", target: "_blank", rel: "noopener noreferrer"], fn f -> %>
+        <div class="form-group">
+            Where are you living? <%= select f, :subject, @regions, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+            Message: <%= textarea f, :body, value: "Hi,\nI'm interested in joining Gather.\n\nRegards,\n<name>", class: "form-control" %>
+        </div>
+
+        <%= submit gettext("Email us"), class: "form-control" %>
+    <% end %>
+    </div>
+    
+</section>
+
+<h2><%= gettext "About" %></h2>
+<p><%= gettext """
+Resources for refugees arriving in New Zealand are spread over many
+different government websites so they're hard to find - and often hard to
+understand, even for native English speakers! They are given some support from
+groups such as the Red Cross, but this is limited and often ends before a refugee
+is fully settled.
+""" %></p>
+<p><%= gettext """
+%{name} is intended to be a community-focused website which collates external links and 
+allowing refugees to share and promote the sources they've found useful, to translate 
+advice into their native languages and to offer to support newcomers once they've been
+through the process.
+""", name: "Gather" %></p>
+<p>
+<%= gettext("This website was created by %{teamname} as a result of the %{techfugees} hackathon",
+    teamname: "<i>ByDefault</i>",
+    techfugees: "<a href=\"https://techfugees.com/techfugees-new-zealand-%F0%9F%87%B3%F0%9F%87%BF/\">Techfugees NZ</a>"
+    ) |> raw() %>
+</p>

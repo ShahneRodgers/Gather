@@ -4,8 +4,9 @@ defmodule Gather.Resources.Comments do
 
   schema "comments" do
     field :comment, :string
-    field :resource_id, :id
-    field :user_id, :id
+
+    belongs_to(:resource, Gather.Resources.Resource)
+    belongs_to(:user, Gather.Accounts.User)
 
     timestamps()
   end
