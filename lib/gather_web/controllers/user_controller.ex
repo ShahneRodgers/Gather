@@ -84,6 +84,10 @@ defmodule GatherWeb.UserController do
     end
   end
 
+  defp update_languages(_user, _params) do
+    {:ok, nil}
+  end
+
   defp store_language?(language) do
     if language["language"] != "" do
       case Details.create_language(language) do
@@ -104,6 +108,10 @@ defmodule GatherWeb.UserController do
     else
       {:error, user_params}
     end
+  end
+
+  defp update_relationships(_user, _params) do
+    {:ok, nil}
   end
 
   defp store_relationship?(relationship) do
