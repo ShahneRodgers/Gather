@@ -116,4 +116,24 @@ defmodule Gather.Resources do
   def change_resource(%Resource{} = resource) do
     Resource.changeset(resource, %{})
   end
+
+  @doc """
+  Creates or updates a vote for a resource
+  """
+  def add_vote(%{"user_id" => user_id, "resource_id" => resource_id}=attrs) do
+    Repo.delete_all(from vote in Votes,
+        where: vote.user_id == ^user_id and vote.resource_id == ^resource_id)
+    %Votes{}
+    |> Votes.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Adds a comment to a resource
+  """
+  def add_comment(attrs \\ %{}) do
+    %Comments{}
+    |> Comments.changeset(attrs)
+    |> Repo.insert()
+  end
 end

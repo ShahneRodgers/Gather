@@ -3,7 +3,7 @@ defmodule GatherWeb.ResourcesController do
 
   alias Gather.Resources
   alias Gather.Accounts
-  alias Gather.Resources.{Resource, Categories}
+  alias Gather.Resources.Resource
 
   require Logger
 
@@ -66,10 +66,38 @@ defmodule GatherWeb.ResourcesController do
 
   def category(conn, %{"category" => category}) do
     resources = Resources.get_by_category(category)
-    users = Enum.map(resources, fn r -> r.user_id end)
+                |> Enum.sort_by(fn r -> -Resource.score(r) end)
+    users = Enum.flat_map(resources, fn r -> Enum.map(r.comments, fn c -> c.user_id end) end)
+            |> Enum.concat(Enum.map(resources, fn r -> r.user_id end))
             |> Accounts.find_users()
             |> Map.new(fn user -> {user.id, Accounts.User.get_display_name(user)} end)
 
-    render(conn, "category.html", resources: resources, users: users)
+    render(conn, "resources.html", resources: resources, users: users)
+  end
+
+  def vote(conn, %{"resource_id" => resource_id, "type" => "up"}) do
+    vote(conn, %{"resource_id" => resource_id, "up" => true})
+  end
+
+  def vote(conn, %{"resource_id" => resource_id, "type" => "down"}) do
+    vote(conn, %{"resource_id" => resource_id, "up" => false})
+  end
+
+  def vote(conn, params) do
+    user = Guardian.Plug.current_resource(conn)
+    case Resources.add_vote(Map.put(params, "user_id", user.id)) do
+      {:ok, _} -> send_resp(conn, 200, "")
+      _ -> send_resp(conn, 500, "")
+    end
+  end
+
+  def comment(req_conn, %{"resource_id" => resource_id}) do
+    {:ok, body, conn} = Plug.Conn.read_body(req_conn)
+    user = Guardian.Plug.current_resource(conn)
+
+    %{"resource_id" => resource_id, "comment" => body, "user_id" => user.id}
+    |> Resources.add_comment()
+
+    send_resp(conn, 200, "")
   end
 end

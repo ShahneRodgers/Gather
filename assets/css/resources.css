@@ -81,9 +81,13 @@ div.resource {
     grid-column: 1;
 }
 
-.resource a img {
+.resource a {
     grid-row-start: 1;
     grid-column: 2;
+    align-self: center;
+}
+
+.resource a img {
     width: 15px;
 }
 
@@ -95,9 +99,8 @@ div.resource {
 
 .votes.votes-score {
     grid-column: 1;
-    grid-row-start: 2;
-    margin-left: 30%;
-    margin-top: -7%;
+    grid-row-start: 1;
+    margin-left: 28%;
 }
 
 img.votes {
@@ -107,8 +110,9 @@ img.votes {
 
 .votes.votes-down {
     grid-column: 1;
-    grid-row-start: 3;
-    margin-top: -30%
+    grid-row-start: 1;
+    margin-top: 15%;
+    align-self: end;
 }
 
 .resource .author {
@@ -124,4 +128,34 @@ img.votes {
 .resource .summary {
     grid-row: 2;
     grid-column: 2;
+}
+
+div.comments {
+    grid-row: 3;
+}
+
+.hide-comments {
+    display: none;
+}
+
+img.comments {
+    grid-row: 3;
+    grid-column-start: 1;
+    width: 50px;
+    margin-left: 20px;
+}
+
+.resource .languages {
+    grid-column: 3;
+    text-align: right;
+    margin-right: 30px;
+}
+
+.comments a {
+    float: right;
+
+}
+
+.comments textarea {
+    width: 600px;
 }

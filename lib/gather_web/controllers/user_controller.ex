@@ -66,12 +66,11 @@ defmodule GatherWeb.UserController do
           {:ok, _} <- update_languages(user, user_params),
           {:ok, _} <- update_relationships(user, user_params)
     do
-      IO.inspect(user)
       redirect(conn, to: Routes.user_path(conn, :profile))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "profile.html", user: user, changeset: changeset)
-      _ -> render(conn, "profile.html", user: user, changeset: Accounts.change_user(user))
+        render(conn, "profile.html", user: user, changeset: changeset, regions: User.regions())
+      _ -> render(conn, "profile.html", user: user, changeset: Accounts.change_user(user), regions: User.regions())
     end
   end
 

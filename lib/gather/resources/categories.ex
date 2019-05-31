@@ -2,10 +2,11 @@ defmodule Gather.Resources.Categories do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key false
   schema "categories" do
-    field :category, :string
+    field :category, :string, primary_key: true
 
-    belongs_to(:resource, Gather.Resources.Resource)
+    belongs_to :resource, Gather.Resources.Resource, primary_key: true
 
     timestamps()
   end

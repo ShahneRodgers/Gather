@@ -5,13 +5,13 @@
                 Or do you just want to know more? Email us!
                 """ %></h3>
     <div class="contact">
-    <%= form_for @conn, "mailto:bydefault-gather-support@gmail.com", [method: "GET", target: "_blank", rel: "noopener noreferrer"], fn f -> %>
+    <%= form_for @conn, "mailto:bydefault-gather-support@gmail.com", [method: "get", csrf_token: false, target: "_blank", rel: "noopener noreferrer"], fn f -> %>
         <div class="form-group">
             Where are you living? <%= select f, :subject, @regions, class: "form-control" %>
         </div>
 
         <div class="form-group">
-            Message: <%= textarea f, :body, value: "Hi,\nI'm interested in joining Gather.\n\nRegards,\n<name>", class: "form-control" %>
+            Message: <%= textarea f, :body, value: "Hi,\n\nI'm interested in joining Gather.\n\nRegards,\n<name>", class: "form-control" %>
         </div>
 
         <%= submit gettext("Email us"), class: "form-control" %>

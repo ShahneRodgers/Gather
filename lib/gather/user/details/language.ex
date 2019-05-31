@@ -4,9 +4,10 @@ defmodule Gather.User.Details.Language do
 
   alias Gather.Accounts.User
 
+  @primary_key false
   schema "languages" do
-    field :language, :string
-    belongs_to(:user, User)
+    field :language, :string, primary_key: true
+    belongs_to :user, User, primary_key: true
 
     timestamps()
   end

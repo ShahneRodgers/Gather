@@ -17,6 +17,10 @@ defmodule Gather.Resources.Resource do
     timestamps()
   end
 
+  def score(resource) do
+    Enum.reduce(resource.votes, 0, fn v, acc -> if v.up, do: acc + 1, else: acc - 1 end)
+  end
+
   @doc false
   def changeset(resource, attrs) do
     resource

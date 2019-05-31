@@ -4,9 +4,10 @@ defmodule Gather.Resources.ResourceLanguages do
 
   alias Gather.Resources.Resource
 
+  @primary_key false
   schema "resource_languages" do
-    field :language, :string
-    belongs_to(:resource, Resource)
+    field :language, :string, primary_key: true
+    belongs_to :resource, Resource, primary_key: true
   end
 
   @doc false

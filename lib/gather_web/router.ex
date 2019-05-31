@@ -19,6 +19,10 @@ defmodule GatherWeb.Router do
     plug(Gather.Accounts.MaybeAuthenticatedPipeline)
   end
 
+  pipeline :ensure_profile do
+    plug(Gather.Accounts.EnsureProfileCreated)
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -28,6 +32,7 @@ defmodule GatherWeb.Router do
 
     get "/", PageController, :index
     get "/logout", AuthenticationController, :logout
+    get "/contact", PageController, :contact
   end
 
   scope "/", GatherWeb do
@@ -36,7 +41,6 @@ defmodule GatherWeb.Router do
     get "/login", AuthenticationController, :login
     post "/login", AuthenticationController, :login
     resources "/user", UserController
-    get "/contact", PageController, :contact
   end
 
   scope "/", GatherWeb do
@@ -44,6 +48,11 @@ defmodule GatherWeb.Router do
 
     get "/profile", UserController, :profile
     put "/profile", UserController, :update_details
+  end
+
+  scope "/", GatherWeb do
+    pipe_through :authenticate
+    pipe_through :ensure_profile
 
     get "/start", TaskController, :index
 
@@ -51,6 +60,8 @@ defmodule GatherWeb.Router do
     resources "/resources", ResourcesController, only: [:index, :new, :create]
 
     get "/resources/category", ResourcesController, :category
+    get "/resources/votes/:resource_id/:type", ResourcesController, :vote
+    post "/resources/comment/:resource_id", ResourcesController, :comment
   end
 
   # Other scopes may use custom stacks.

@@ -4,10 +4,11 @@ defmodule Gather.User.Details.Relationship do
 
   alias Gather.Accounts.User
 
+  @primary_key false
   schema "relationships" do
-    field :name, :string
-    field :type, :string
-    belongs_to(:user, User)
+    field :name, :string, primary_key: true
+    field :type, :string, primary_key: true
+    belongs_to :user, User, primary_key: true
 
     timestamps()
   end
