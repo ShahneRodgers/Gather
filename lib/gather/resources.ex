@@ -23,15 +23,28 @@ defmodule Gather.Resources do
             preload: [:languages])
   end
 
-  def get_by_category(category) do
+  @doc """
+  Returns the list of resources that are relevant to the given region.
+
+  ## Examples
+
+      iex> list_resources(region)
+      [%Resource{}, ...]
+
+  """
+  def list_resources(region) do
+    Repo.all(from r in Resource,
+            where: is_nil(r.region) or r.region == ^region,
+            preload: [:languages])
+  end
+
+  def get_by_category(category, region) do
     Repo.all(from cat in Categories,
              where: cat.category == ^category,
              join: r in Resource, on: cat.resource_id == r.id,
-             select: r
-             #preload: [categories: r, comments: r, votes: r]
-             #order_by: r.score)
-    )
-    |> Repo.preload([:categories, :comments, :votes, :languages])
+             select: r)
+      |> Repo.preload([:categories, :comments, :votes, :languages])
+      |> Enum.filter(fn r -> is_nil(r.region) or r.region == region end)
   end
 
   @doc """

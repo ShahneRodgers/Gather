@@ -2,18 +2,27 @@
   <h2><%= gettext "Getting started in New Zealand" %></h2>
 </section>
 
+<% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
 <ol>
-  <li><%= gettext "Arriving in New Zealand" %></li>
-
-  <li><%= gettext "Housing in New Zealand" %></li>
-
-  <li><%= gettext "Work" %></li>
-
-  <li><%= gettext "Education" %></li>
-
-  <li><%= gettext "Taking care of your health" %></li>
-
-  <li><%= gettext "Transport in New Zealand" %></li>
-
-  <li><%= gettext "Get in touch with family" %></li>
+  <%= for task <- @tasks do %>
+    <li class="task-item">
+      <h4><%= Gettext.gettext(GatherWeb.Gettext, task.title) %></h4>
+      <ul>
+        <%= for subtask <- task.subtasks do %>
+          <li>
+            <h5>
+              <div class="<%= if (Enum.member? @completed, subtask.id), do: "completed", else: "todo" %>"></div>
+              <%= Gettext.gettext(GatherWeb.Gettext, subtask.title) %>
+            </h5>
+            <%= for resource <- subtask.resources do %>
+              <div class="task-resource">
+                <%= render GatherWeb.ResourcesView, "resource_detail.html", Map.put(assigns, :resource, resource) %>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path: Routes.task_path(@conn, :comment, task.id)}) %>
+    </li>
+  <% end %> 
 </ol>

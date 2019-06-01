@@ -1,34 +1,13 @@
+<% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
 <%= for resource <- @resources do %>
     <div class="resource">
         <img class="votes votes-up" src="<%= Routes.static_path(@conn, "/images/up.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'up')"/>
         <p class="votes votes-score"><%= Gather.Resources.Resource.score(resource) %></p>
         <img class="votes votes-down" src="<%= Routes.static_path(@conn, "/images/down.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'down')"/>
         
-        <a href="<%= resource.link %>" target="_blank" rel="noopener noreferrer nofollow">
-            <div class="title"><%= resource.title %></div>
-            <img src="<%= Routes.static_path(@conn, "/images/link.svg") %>"/>
-            <div class="author"><%= Map.get(@users, resource.user_id) %></div>
-        </a>
-        <div class="summary"><%= resource.summary %></div>
-        <div class="languages">
-            <%= for language <- resource.languages do %>
-            <p><%= language.language %></p>
-            <% end %>
-        </div>
-        <img class="comments" src="<%= Routes.static_path(@conn, "/images/comment.svg") %>" onclick="javascript:document.getElementById('comment-content-<%= resource.id %>').classList.toggle('hide-comments');"/>
-        <div class="comments hide-comments" id="comment-content-<%= resource.id %>">
-            <% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
-            <%= for comment <- resource.comments do %>
-                <div class="comment">
-                    <div class="content"><%= comment.comment %></div>
-                    <div class="time"><%= comment.inserted_at %></div>
-                    <div class="author"><%= Map.get(@users, comment.user_id) %></div>
-                </div>
-            <% end %>
-            <textarea id="new-content-<%= resource.id %>"></textarea>
-            <a class="btn btn-main" onclick="javascript:submit_comment(<%= resource.id %>, document.getElementById('new-content-<%= resource.id %>'), '<%= csrf_token %>');"><%= gettext "Submit" %></a>
-        </div>
-        </div>
+        <%= render "resource_detail.html", Map.put(assigns, :resource, resource) %>
+        
+        <%= render_shared "comments.html", Map.merge(assigns, %{id: resource.id, comments: resource.comments, csrf_token: csrf_token, path: Routes.resources_path(@conn, :comment, resource.id)}) %>
     </div>
 <% end %>
 

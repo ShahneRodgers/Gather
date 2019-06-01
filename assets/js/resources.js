@@ -4,9 +4,9 @@ export function vote(resource_id, type){
     req.send(null);
 }
 
-export function submit_comment(resource_id, textarea, csrf_token){
+export function submit_comment(path, textarea, csrf_token){
     var req = new XMLHttpRequest();
-    req.open('POST', '/resources/comment/' + resource_id);
+    req.open('POST', path);
     req.setRequestHeader("X-CSRF-Token", csrf_token);
     req.send(textarea.value);
     

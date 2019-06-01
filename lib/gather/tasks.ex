@@ -6,7 +6,7 @@ defmodule Gather.Tasks do
   import Ecto.Query, warn: false
   alias Gather.Repo
 
-  alias Gather.Tasks.Task
+  alias Gather.Tasks.{Task, Subtask, Resources, Comments, UserCompletedTask}
 
   @doc """
   Returns the list of tasks.
@@ -18,7 +18,32 @@ defmodule Gather.Tasks do
 
   """
   def list_tasks do
-    Repo.all(Task)
+    Repo.all(from task in Task,
+            left_join: comment in assoc(task, :comments),
+            left_join: subtask in assoc(task, :subtasks),
+            left_join: resource in assoc(subtask, :resources),
+            left_join: language in assoc(resource, :languages),
+            preload: [subtasks: {subtask, resources: {resource, [languages: language]}}, comments: comment]
+            )
+  end
+
+  @doc """
+  Returns the list of subtasks.
+
+  ## Examples
+
+      iex> list_subtasks()
+      [%Subtask{}, ...]
+
+  """
+  def list_subtasks do
+    Repo.all(Subtask)
+  end
+
+  def list_user_completed_subtask_ids(user) do
+    Repo.all(from ut in UserCompletedTask,
+            where: ut.user_id == ^user.id,
+            select: ut.subtask_id)
   end
 
   @doc """
@@ -52,6 +77,24 @@ defmodule Gather.Tasks do
   def create_task(attrs \\ %{}) do
     %Task{}
     |> Task.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a subtask.
+  """
+  def create_subtask(attrs \\ %{}) do
+    %Subtask{}
+    |> Subtask.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates an association between a subtask and a resource.
+  """
+  def create_subtask_resource(attrs \\ %{}) do
+    %Resources{}
+    |> Resources.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -100,5 +143,40 @@ defmodule Gather.Tasks do
   """
   def change_task(%Task{} = task) do
     Task.changeset(task, %{})
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking subtask changes.
+
+  ## Examples
+
+      iex> change_subtask(task)
+      %Ecto.Changeset{source: %Subtask{}}
+
+  """
+  def change_subtask(%Subtask{} = subtask) do
+    Subtask.changeset(subtask, %{})
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking subtask changes.
+
+  ## Examples
+
+      iex> change_subtask(task)
+      %Ecto.Changeset{source: %Subtask{}}
+
+  """
+  def change_resource(%Resources{} = resource) do
+    Resources.changeset(resource, %{})
+  end
+
+  @doc """
+  Adds a comment to a task
+  """
+  def add_comment(attrs \\ %{}) do
+    %Comments{}
+    |> Comments.changeset(attrs)
+    |> Repo.insert()
   end
 end

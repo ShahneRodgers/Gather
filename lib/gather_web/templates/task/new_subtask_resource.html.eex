@@ -1,0 +1,23 @@
+<%= form_for @changeset, Routes.task_path(@conn, :create_resource), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :subtask_id, class: "control-label" %>
+    <%= select f, :subtask_id, Enum.map(@subtasks, fn t -> [key: t.title, value: t.id] end), class: "form-control" %>
+    <%= error_tag f, :subtask_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :resource_id, class: "control-label" %>
+    <%= select f, :resource_id, Enum.map(@resources, fn t -> [key: t.title, value: t.id] end), class: "form-control" %>
+    <%= error_tag f, :resource_id %>
+  </div>
+  
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

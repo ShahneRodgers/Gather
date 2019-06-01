@@ -40,7 +40,6 @@ defmodule GatherWeb.Router do
 
     get "/login", AuthenticationController, :login
     post "/login", AuthenticationController, :login
-    resources "/user", UserController
   end
 
   scope "/", GatherWeb do
@@ -55,6 +54,7 @@ defmodule GatherWeb.Router do
     pipe_through :ensure_profile
 
     get "/start", TaskController, :index
+    post "/tasks/comment/:task_id", TaskController, :comment
 
     post "/resources/search", ResourcesController, :search
     resources "/resources", ResourcesController, only: [:index, :new, :create]
@@ -62,6 +62,18 @@ defmodule GatherWeb.Router do
     get "/resources/category", ResourcesController, :category
     get "/resources/votes/:resource_id/:type", ResourcesController, :vote
     post "/resources/comment/:resource_id", ResourcesController, :comment
+  end
+
+  scope "/admin", GatherWeb do
+    pipe_through :browser
+
+    resources "/user", UserController
+    get "/tasks/new", TaskController, :new
+    post "/tasks/create", TaskController, :create
+    get "/subtasks/new", TaskController, :new_subtask
+    post "/subtasks/create", TaskController, :create_subtask
+    get "/subtasks/resource", TaskController, :new_resource
+    post "/subtasks/resource", TaskController, :create_resource
   end
 
   # Other scopes may use custom stacks.

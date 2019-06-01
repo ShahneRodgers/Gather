@@ -1,0 +1,12 @@
+<img class="comments" src="<%= Routes.static_path(@conn, "/images/comment.svg") %>" onclick="javascript:document.getElementById('comment-content-<%= @id %>').classList.toggle('hide-comments');"/>
+<div class="comments hide-comments" id="comment-content-<%= @id %>">
+    <%= for comment <- @comments do %>
+        <div class="comment">
+            <div class="content"><%= comment.comment %></div>
+            <div class="time"><%= comment.inserted_at %></div>
+            <div class="author"><%= Map.get(@users, comment.user_id) %></div>
+        </div>
+    <% end %>
+    <textarea id="new-content-<%= @id %>"></textarea>
+    <a class="btn btn-main" onclick="javascript:submit_comment(@path, document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+</div>

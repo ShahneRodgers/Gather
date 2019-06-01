@@ -10,7 +10,8 @@ defmodule GatherWeb.ResourcesController do
   @categories [:housing, :work, :education, :transport, :health, :law, :service_providers, :communities, :other]
 
   def index(conn, _params) do
-    resources = Resources.list_resources()
+    user = Guardian.Plug.current_resource(conn)
+    resources = Resources.list_resources(user.region)
     authors = Enum.map(resources, fn r -> r.user_id end)
               |> Accounts.find_users()
               |> Enum.map(&Accounts.User.get_display_name/1)
@@ -27,7 +28,7 @@ defmodule GatherWeb.ResourcesController do
 
   def new(conn, _params) do
     changeset = Resources.change_resource(%Resource{})
-    render(conn, "new.html", changeset: changeset, categories: @categories)
+    render(conn, "new.html", changeset: changeset, categories: @categories, regions: Accounts.User.regions())
   end
 
   def create(conn, %{"resource" => resource}) do
@@ -50,7 +51,7 @@ defmodule GatherWeb.ResourcesController do
         redirect(conn, to: Routes.resources_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, categories: @categories)
+        render(conn, "new.html", changeset: changeset, categories: @categories, regions: Accounts.User.regions())
     end
   end
 
@@ -65,7 +66,8 @@ defmodule GatherWeb.ResourcesController do
   end
 
   def category(conn, %{"category" => category}) do
-    resources = Resources.get_by_category(category)
+    user = Guardian.Plug.current_resource(conn)
+    resources = Resources.get_by_category(category, user.region)
                 |> Enum.sort_by(fn r -> -Resource.score(r) end)
     users = Enum.flat_map(resources, fn r -> Enum.map(r.comments, fn c -> c.user_id end) end)
             |> Enum.concat(Enum.map(resources, fn r -> r.user_id end))

@@ -40,6 +40,12 @@
     <%= text_input f, :format, class: "form-control" %>
     <%= error_tag f, :format %>
   </div>
+  
+  <div class="form-group">
+    <%= label f, :region, class: "control-label" %>
+    <%= select f, :region, @regions, prompt: "Any", selected: nil, class: "form-control" %>
+    <%= error_tag f, :region %>
+  </div>
 
   <div class="form-group">
     <%= inputs_for f, :categories, [append: [%Gather.Resources.Categories{}]], fn fi -> %>

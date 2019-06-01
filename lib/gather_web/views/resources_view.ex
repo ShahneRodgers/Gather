@@ -14,4 +14,8 @@ defmodule GatherWeb.ResourcesView do
       _ -> gettext("Other")
     end
   end
+
+  def render_shared(template, assigns \\ []) do
+    render(GatherWeb.LayoutView, template, assigns)
+  end
 end

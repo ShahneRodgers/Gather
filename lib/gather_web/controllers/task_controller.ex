@@ -5,6 +5,76 @@ defmodule GatherWeb.TaskController do
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
-    render(conn, "index.html", tasks: tasks)
+    user_completed_tasks = Guardian.Plug.current_resource(conn)
+                           |> Tasks.list_user_completed_subtask_ids()
+
+    users = Enum.flat_map(tasks, fn t -> Enum.flat_map(t.subtasks, fn s -> Enum.map(s.resources, fn r -> r.user_id end) end) end)
+              |> Gather.Accounts.find_users()
+              |> Map.new(fn user -> {user.id, Gather.Accounts.User.get_display_name(user)} end)
+    render(conn, "index.html", tasks: tasks, users: users, completed: user_completed_tasks)
+  end
+
+  def new(conn, _) do
+    changeset = Tasks.change_task(%Tasks.Task{})
+    render(conn, "new.html", changeset: changeset)
+  end
+
+  def create(conn, %{"task" => task_params}) do
+    case Tasks.create_task(task_params) do
+      {:ok, task} ->
+        if Map.get(task_params, "subtasks") do
+          add_associations(task_params["subtasks"], task.id, &Tasks.create_subtask/1)
+        end
+
+        redirect(conn, to: Routes.task_path(conn, :index))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+  defp add_associations(params, task_id, func) do
+    # FIXME: this should probably be done more efficiently
+    Enum.map(Map.values(params), fn param -> if param != "", do: func.(Map.put(param, "task_id", task_id)) end)
+    :ok
+  end
+
+  def new_subtask(conn, _) do
+    changeset = Tasks.change_subtask(%Tasks.Subtask{})
+    render(conn, "new_subtask.html", changeset: changeset, tasks: Tasks.list_tasks())
+  end
+
+  def create_subtask(conn, %{"subtask" => subtask_params}) do
+    case Tasks.create_subtask(subtask_params) do
+      {:ok, _} -> redirect(conn, to: Routes.task_path(conn, :index))
+      {:error, %Ecto.Changeset{} = changeset} -> render(conn, "new_subtask.html", changeset: changeset, tasks: Tasks.list_tasks())
+    end
+  end
+
+  def new_resource(conn, %Ecto.Changeset{}=changeset) do
+    resources = Gather.Resources.list_resources()
+    render(conn, "new_subtask_resource.html", changeset: changeset, subtasks: Tasks.list_subtasks(), resources: resources)
+  end
+
+  def new_resource(conn, _) do
+    changeset = Tasks.change_resource(%Tasks.Resources{})
+    new_resource(conn, changeset)
+  end
+
+  def create_resource(conn, %{"resources" => resource_params}) do
+    case Tasks.create_subtask_resource(resource_params) do
+      {:ok, _} -> redirect(conn, to: Routes.task_path(conn, :index))
+      {:error, %Ecto.Changeset{} = changeset} -> new_resource(conn, changeset)
+    end
+  end
+
+  def comment(req_conn, %{"task_id" => task_id}) do
+    {:ok, body, conn} = Plug.Conn.read_body(req_conn)
+    user = Guardian.Plug.current_resource(conn)
+
+    %{"task_id" => task_id, "comment" => body, "user_id" => user.id}
+    |> Tasks.add_comment()
+
+    send_resp(conn, 200, "")
   end
 end

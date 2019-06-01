@@ -8,6 +8,7 @@ defmodule Gather.Resources.Resource do
     field :title, :string
     field :summary, :string
     field :user_id, :id
+    field :region, :string
 
     has_many(:categories, Gather.Resources.Categories)
     has_many(:comments, Gather.Resources.Comments)
@@ -24,8 +25,17 @@ defmodule Gather.Resources.Resource do
   @doc false
   def changeset(resource, attrs) do
     resource
-    |> cast(attrs, [:link, :title, :summary, :format, :user_id])
-    |> validate_required([:link, :title, :format, :user_id])
+    |> cast(attrs, [:link, :title, :summary, :format, :user_id, :region])
+    |> validate_required([:link, :title, :format, :user_id, :region])
+    |> validate_change(:region, &validate_region/2)
     |> foreign_key_constraint(:user_id)
+  end
+
+  defp validate_region(_, region) do
+    if Enum.any? Gather.Accounts.User.regions, fn r -> Atom.to_string(r) == region end do
+      []
+    else
+      [region: "must be a valid region or nil"]
+    end
   end
 end
