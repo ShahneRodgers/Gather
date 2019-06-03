@@ -41,7 +41,7 @@ defmodule GatherWeb.UserController do
     user = Guardian.Plug.current_resource(conn)
            |> Details.load_user_details()
     changeset = Accounts.change_user(user)
-    render(conn, "profile.html", user: user, changeset: changeset, regions: User.regions())
+    render(conn, "profile.html", user: user, changeset: changeset, regions: Gather.Regions.regions())
   end
 
   def edit(conn, %{"id" => id}) do
@@ -69,8 +69,8 @@ defmodule GatherWeb.UserController do
       redirect(conn, to: Routes.user_path(conn, :profile))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "profile.html", user: user, changeset: changeset, regions: User.regions())
-      _ -> render(conn, "profile.html", user: user, changeset: Accounts.change_user(user), regions: User.regions())
+        render(conn, "profile.html", user: user, changeset: changeset, regions: Gather.Regions.regions())
+      _ -> render(conn, "profile.html", user: user, changeset: Accounts.change_user(user), regions: Gather.Regions.regions())
     end
   end
 

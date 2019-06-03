@@ -12,3 +12,14 @@ export function submit_comment(path, textarea, csrf_token){
     
     textarea.value = "";
 }
+
+export function complete_task(subtask_id, path, csrf_token){
+    var req = new XMLHttpRequest();
+    req.open('GET', path);
+    req.setRequestHeader("X-CSRF-Token", csrf_token);
+    req.send(null);
+
+    var classes = document.getElementById(subtask_id).classList;
+    classes.toggle('todo');
+    classes.toggle('completed');
+}

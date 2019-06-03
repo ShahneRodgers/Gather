@@ -28,7 +28,7 @@ defmodule GatherWeb.ResourcesController do
 
   def new(conn, _params) do
     changeset = Resources.change_resource(%Resource{})
-    render(conn, "new.html", changeset: changeset, categories: @categories, regions: Accounts.User.regions())
+    render(conn, "new.html", changeset: changeset, categories: @categories, regions: Gather.Regions.regions())
   end
 
   def create(conn, %{"resource" => resource}) do
@@ -51,7 +51,7 @@ defmodule GatherWeb.ResourcesController do
         redirect(conn, to: Routes.resources_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, categories: @categories, regions: Accounts.User.regions())
+        render(conn, "new.html", changeset: changeset, categories: @categories, regions: Gather.Regions.regions())
     end
   end
 
@@ -87,9 +87,15 @@ defmodule GatherWeb.ResourcesController do
 
   def vote(conn, params) do
     user = Guardian.Plug.current_resource(conn)
-    case Resources.add_vote(Map.put(params, "user_id", user.id)) do
-      {:ok, _} -> send_resp(conn, 200, "")
-      _ -> send_resp(conn, 500, "")
+    params = Map.put(params, "user_id", user.id)
+    if Resources.vote_exists?(params) do
+      Resources.delete_vote(params)
+      send_resp(conn, 200, "")
+    else
+      case Resources.add_vote(params) do
+        {:ok, _} -> send_resp(conn, 200, "")
+        _ -> send_resp(conn, 500, "")
+      end
     end
   end
 

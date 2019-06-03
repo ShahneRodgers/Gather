@@ -1,0 +1,38 @@
+<section class="communities background2">
+  <h3><%= gettext "Communities" %></h3>
+  <h2><%= @region %></h2>
+</section>
+
+<h4> <%= gettext "Online communities in %{region}", region: @region %> </h4>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Region</th>
+      <th>Summary</th>
+      <th>Link</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for community <- @communities do %>
+    <tr>
+      <div id="community-<%= community.id %>" class="community-group image-thumbnail">
+        <%= link community.name, to: community.link %>
+        <div class="community-summary"> <%= community.summary %></div>
+      </div>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "Add Community", to: Routes.community_path(@conn, :new) %></span>
+
+<h4> <%= gettext "%{region} Representatives", region: @region %></h4>
+<table class="representatives">
+<%= for rep <- @representatives do %>
+
+<% end %>
+</table>
+

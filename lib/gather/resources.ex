@@ -133,12 +133,27 @@ defmodule Gather.Resources do
   @doc """
   Creates or updates a vote for a resource
   """
-  def add_vote(%{"user_id" => user_id, "resource_id" => resource_id}=attrs) do
-    Repo.delete_all(from vote in Votes,
-        where: vote.user_id == ^user_id and vote.resource_id == ^resource_id)
+  def add_vote(attrs) do
+    delete_vote(attrs)
     %Votes{}
     |> Votes.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Returns true if the vote already exists
+  """
+  def vote_exists?(%{"user_id" => user_id, "resource_id" => resource_id, "up" => up}) do
+    not is_nil(Repo.one(from vote in Votes,
+              where: vote.user_id == ^user_id and vote.resource_id == ^resource_id and vote.up == ^up))
+  end
+
+  @doc """
+  Deletes the vote
+  """
+  def delete_vote(%{"user_id" => user_id, "resource_id" => resource_id}) do
+    Repo.delete_all(from vote in Votes,
+        where: vote.user_id == ^user_id and vote.resource_id == ^resource_id)
   end
 
   @doc """

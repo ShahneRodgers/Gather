@@ -55,9 +55,14 @@ defmodule GatherWeb.Router do
 
     get "/start", TaskController, :index
     post "/tasks/comment/:task_id", TaskController, :comment
+    get "/tasks/complete/:subtask_id", TaskController, :complete
 
     post "/resources/search", ResourcesController, :search
     resources "/resources", ResourcesController, only: [:index, :new, :create]
+
+    resources "/events", EventController
+
+    resources "/communities", CommunityController
 
     get "/resources/category", ResourcesController, :category
     get "/resources/votes/:resource_id/:type", ResourcesController, :vote

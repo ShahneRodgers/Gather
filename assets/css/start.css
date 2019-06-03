@@ -1,0 +1,39 @@
+.task-item {
+    border: var(--light-grey);
+    border-style: solid;
+    border-width: thin;
+    padding-left: 50px;
+    width: min-content;
+    min-width: 500px;
+    height: min-content;
+}
+
+.task-item .todo {
+    background-image: url("/images/todo.svg");
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    grid-column: 1;
+    align-self: center;
+}
+
+.task-item .completed {
+    background-image: url("/images/checked.svg");
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    grid-column: 1;
+    align-self: center;
+}
+
+.task-item ul li {
+    display: grid;
+    grid-template-columns: 40px auto;
+    grid-template-rows: 50px auto;
+    margin-left: -40px;
+}
+
+.task-item ul li h5 {
+    grid-column: 2;
+    align-self: center;
+}

@@ -27,15 +27,7 @@ defmodule Gather.Resources.Resource do
     resource
     |> cast(attrs, [:link, :title, :summary, :format, :user_id, :region])
     |> validate_required([:link, :title, :format, :user_id, :region])
-    |> validate_change(:region, &validate_region/2)
+    |> validate_change(:region, &Gather.Regions.validate_region/2)
     |> foreign_key_constraint(:user_id)
-  end
-
-  defp validate_region(_, region) do
-    if Enum.any? Gather.Accounts.User.regions, fn r -> Atom.to_string(r) == region end do
-      []
-    else
-      [region: "must be a valid region or nil"]
-    end
   end
 end

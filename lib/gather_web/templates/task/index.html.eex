@@ -5,24 +5,24 @@
 <% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
 <ol>
   <%= for task <- @tasks do %>
-    <li class="task-item">
-      <h4><%= Gettext.gettext(GatherWeb.Gettext, task.title) %></h4>
-      <ul>
-        <%= for subtask <- task.subtasks do %>
-          <li>
-            <h5>
-              <div class="<%= if (Enum.member? @completed, subtask.id), do: "completed", else: "todo" %>"></div>
-              <%= Gettext.gettext(GatherWeb.Gettext, subtask.title) %>
-            </h5>
-            <%= for resource <- subtask.resources do %>
-              <div class="task-resource">
-                <%= render GatherWeb.ResourcesView, "resource_detail.html", Map.put(assigns, :resource, resource) %>
-              </div>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-      <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path: Routes.task_path(@conn, :comment, task.id)}) %>
-    </li>
+    <div class="task-item">
+      <li>
+        <h4><%= Gettext.gettext(GatherWeb.Gettext, task.title) %></h4>
+        <ul>
+          <%= for subtask <- task.subtasks do %>
+            <li>
+              <div id="<%= subtask.id %>" class="<%= if (Enum.member? @completed, subtask.id), do: "completed", else: "todo" %>" onclick="javascript:complete_task(<%= subtask.id %>, '<%= Routes.task_path(@conn, :complete, subtask.id) %>', '<%= csrf_token %>')"></div>
+              <h5><%= Gettext.gettext(GatherWeb.Gettext, subtask.title) %></h5>
+              <%= for resource <- subtask.resources do %>
+                <div class="task-resource">
+                  <%= render GatherWeb.ResourcesView, "resource_detail.html", Map.put(assigns, :resource, resource) %>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+        <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path: Routes.task_path(@conn, :comment, task.id)}) %>
+      </li>
+      </div>
   <% end %> 
 </ol>

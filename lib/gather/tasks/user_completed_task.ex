@@ -11,7 +11,7 @@ defmodule Gather.Tasks.UserCompletedTask do
   @doc false
   def changeset(user_completed_task, attrs) do
     user_completed_task
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:subtask_id, :user_id])
+    |> validate_required([:subtask_id, :user_id])
   end
 end

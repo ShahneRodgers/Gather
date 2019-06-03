@@ -4,9 +4,10 @@ defmodule GatherWeb.TaskController do
   alias Gather.Tasks
 
   def index(conn, _params) do
-    tasks = Tasks.list_tasks()
-    user_completed_tasks = Guardian.Plug.current_resource(conn)
-                           |> Tasks.list_user_completed_subtask_ids()
+    user = Guardian.Plug.current_resource(conn)
+
+    tasks = Tasks.list_tasks(user.region)
+    user_completed_tasks = Tasks.list_user_completed_subtask_ids(user)
 
     users = Enum.flat_map(tasks, fn t -> Enum.flat_map(t.subtasks, fn s -> Enum.map(s.resources, fn r -> r.user_id end) end) end)
               |> Gather.Accounts.find_users()
@@ -39,15 +40,21 @@ defmodule GatherWeb.TaskController do
     :ok
   end
 
+  def new_subtask(conn, %Ecto.Changeset{}=changeset) do
+    user = Guardian.Plug.current_resource(conn)
+
+    render(conn, "new_subtask.html", changeset: changeset, tasks: Tasks.list_tasks(user.region))
+  end
+
   def new_subtask(conn, _) do
     changeset = Tasks.change_subtask(%Tasks.Subtask{})
-    render(conn, "new_subtask.html", changeset: changeset, tasks: Tasks.list_tasks())
+    new_subtask(conn, changeset)
   end
 
   def create_subtask(conn, %{"subtask" => subtask_params}) do
     case Tasks.create_subtask(subtask_params) do
       {:ok, _} -> redirect(conn, to: Routes.task_path(conn, :index))
-      {:error, %Ecto.Changeset{} = changeset} -> render(conn, "new_subtask.html", changeset: changeset, tasks: Tasks.list_tasks())
+      {:error, %Ecto.Changeset{} = changeset} -> new_subtask(conn, changeset)
     end
   end
 
@@ -74,6 +81,19 @@ defmodule GatherWeb.TaskController do
 
     %{"task_id" => task_id, "comment" => body, "user_id" => user.id}
     |> Tasks.add_comment()
+
+    send_resp(conn, 200, "")
+  end
+
+  def complete(conn, %{"subtask_id" => subtask_id}) do
+    user = Guardian.Plug.current_resource(conn)
+
+    params = %{"user_id" => user.id, "subtask_id" => subtask_id}
+    if Tasks.user_completed_task? params do
+      Tasks.delete_completed(params)
+    else
+      Tasks.add_completed(params)
+    end
 
     send_resp(conn, 200, "")
   end

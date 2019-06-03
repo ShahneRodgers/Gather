@@ -1,0 +1,34 @@
+<section class="events background2">
+  <h2><%= gettext "Events" %> <%= if @region, do: gettext("in %{region}", region: @region) %> </h2>
+  <%= if @region do %>
+  <%= link "Show all events", to: Routes.event_path(@conn, :index, region: "all"), class: "event-link" %>
+  <% end %>
+</section>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  
+  var calendar = new Calendar(calendarEl, {
+    plugins: [ dayGridPlugin, interactionPlugin ],
+    events: [
+      <%= for event <- @events do %>
+        {
+          title: '<%= event.name %>',
+          start: '<%= event.time %>',
+          editable: false,
+          url: '<%= Routes.event_path(@conn, :show, event.id) %>'
+        },
+      <% end %>
+    ],
+    dateClick: function(info) {
+      window.location.href = "<%= Routes.event_path(@conn, :new) %>?date=" + info.dateStr;
+    }
+  });
+
+  calendar.render();
+});
+</script>
+<div id="calendar" class="calendar"></div>
+

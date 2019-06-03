@@ -1,0 +1,12 @@
+.calendar {
+    margin: 50px;
+}
+
+.events h2 {
+    margin-block-end: 20px;
+}
+
+.event-link {
+    color: var(--light-grey);
+    text-decoration: none;
+}

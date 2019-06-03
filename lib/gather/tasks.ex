@@ -17,12 +17,13 @@ defmodule Gather.Tasks do
       [%Task{}, ...]
 
   """
-  def list_tasks do
+  def list_tasks(region) do
     Repo.all(from task in Task,
             left_join: comment in assoc(task, :comments),
             left_join: subtask in assoc(task, :subtasks),
             left_join: resource in assoc(subtask, :resources),
             left_join: language in assoc(resource, :languages),
+            where: is_nil(resource.region) or resource.region == ^region,
             preload: [subtasks: {subtask, resources: {resource, [languages: language]}}, comments: comment]
             )
   end
@@ -178,5 +179,31 @@ defmodule Gather.Tasks do
     %Comments{}
     |> Comments.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Marks a task as completed
+  """
+  def add_completed(attrs) do
+    delete_completed(attrs)
+    %UserCompletedTask{}
+    |> UserCompletedTask.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Unmarks a task as completed
+  """
+  def delete_completed(%{"subtask_id" => subtask, "user_id" => user}) do
+    Repo.delete_all(from uct in UserCompletedTask,
+                    where: uct.subtask_id == ^subtask and uct.user_id == ^user)
+  end
+
+  @doc """
+  Returns true if the user has already completed the task
+  """
+  def user_completed_task?(%{"subtask_id" => subtask, "user_id" => user}) do
+    not is_nil(Repo.one(from uct in UserCompletedTask,
+                        where: uct.subtask_id == ^subtask and uct.user_id == ^user))
   end
 end

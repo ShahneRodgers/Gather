@@ -10,6 +10,6 @@ defmodule GatherWeb.PageController do
   end
 
   def contact(conn, _params) do
-    render(conn, "contact.html", regions: Gather.Accounts.User.regions())
+    render(conn, "contact.html", regions: Gather.Regions.regions())
   end
 end
