@@ -1,5 +1,13 @@
 <nav role="navigation">
     <ul>
+    <li>
+        <select onChange="setLocale(this.value)">
+            <option selected><%= gettext "Language" %></option>
+            <%= for language <- @available_languages do %>
+                <option value="<%= elem(language, 0) %>"><%= elem(language, 1) %></option>
+            <% end %>
+        </select>
+    </li>
     <li><a href="<%= Routes.task_path(@conn, :index)%>"><%= Gettext.gettext "Get Started" %></a></li>
     <li><a href="<%= Routes.resources_path(@conn, :index)%>"><%= Gettext.gettext "Resources" %></a></li>
     <li><a href="<%= Routes.community_path(@conn, :index)%>"><%= Gettext.gettext "Communities" %></a></li>

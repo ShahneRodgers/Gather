@@ -7,6 +7,7 @@ defmodule GatherWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug GatherWeb.Languages.LanguagesPlug
   end
 
   pipeline :authenticate do
@@ -28,18 +29,18 @@ defmodule GatherWeb.Router do
   end
 
   scope "/", GatherWeb do
+    pipe_through :browser
+
+    get "/login", AuthenticationController, :login
+    post "/login", AuthenticationController, :login
+  end
+
+  scope "/", GatherWeb do
     pipe_through :maybe_authenticate
 
     get "/", PageController, :index
     get "/logout", AuthenticationController, :logout
     get "/contact", PageController, :contact
-  end
-
-  scope "/", GatherWeb do
-    pipe_through :browser
-
-    get "/login", AuthenticationController, :login
-    post "/login", AuthenticationController, :login
   end
 
   scope "/", GatherWeb do
@@ -67,6 +68,10 @@ defmodule GatherWeb.Router do
     get "/resources/category", ResourcesController, :category
     get "/resources/votes/:resource_id/:type", ResourcesController, :vote
     post "/resources/comment/:resource_id", ResourcesController, :comment
+
+    get "/users/representative", UserController, :become_rep
+    post "/users/representative", UserController, :create_rep
+    get "/users/representative/remove", UserController, :remove_rep
   end
 
   scope "/admin", GatherWeb do

@@ -23,3 +23,10 @@ export function complete_task(subtask_id, path, csrf_token){
     classes.toggle('todo');
     classes.toggle('completed');
 }
+
+export function setLocale(value){
+    var url = new URL(document.location);
+    var params = url.searchParams;
+    params.set("locale", value);
+    document.location.href = url.origin + url.pathname + "?" + params.toString();
+}

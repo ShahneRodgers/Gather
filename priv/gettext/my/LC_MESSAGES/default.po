@@ -1,0 +1,63 @@
+msgid "Get Started"
+msgstr "စတင်"
+
+msgid "Resources"
+msgstr "အရင်းအမြစ်များ"
+
+msgid "Welcome to New Zealand!"
+msgstr "နယူးဇီလန်မှလှိုက်လှဲစွာကြိုဆိုပါသည်"
+
+msgid "Arriving in New Zealand"
+msgstr "၁။ နယူးဇီလန်ရောက်ရှိချိန်"
+
+msgid "What to expect?"
+msgstr "ဘာကိုမျှော်လင့်နိုင်လဲ?"
+
+msgid "Meeting with Immigration"
+msgstr "လူဝင်မှုကြီးကြပ်ရေးနှင့်တွေ့ဆုံခြင်း"
+
+msgid "Staying your first few weeks"
+msgstr "ဦးဆုံး ရက်သတ္တပတ် အနည်းငယ်အတွင်း"
+
+msgid "Housing in New Zealand"
+msgstr "၂။ နယူးဇီလန်အစိုးရအိမ်ယာ"
+
+msgid "Apply for public housing"
+msgstr "အစိုးရအိမ်ယာကို လျှောက်ခြင်း"
+
+msgid "Housing support"
+msgstr "အိမ်ယာဆိုင်ရာအကူအညီ"
+
+msgid "My rights as a renter"
+msgstr "အိမ်ငှား အနေဖြင့် ကျွုန်ုပ်၏ အခွင့်အရေးများ"
+
+msgid "Work"
+msgstr "၃။ အလုပ်အကိုင်"
+
+msgid "Find a job"
+msgstr "အလုပ်ရှာခြင်း"
+
+msgid "Pathways to Employment"
+msgstr "အလုပ်အကိုင်သို့လမ်းကြောင်း"
+
+msgid "Getting Started in New Zealand"
+msgstr "နယူးဇီလန်တွင်စတင်ခြင်း"
+
+msgid "Cannot find what we’re looking for?"
+msgstr "သင်ရှာနေသောအရာကို ရှာမတွေ့နိုင်ဘူးလား?"
+
+msgid "Find More"
+msgstr "ထပ်ရှာရန်"
+
+msgid "Comment"
+msgstr "မှတ်ချက်"
+
+msgid "Share"
+msgstr "မျှဝေပါ"
+
+msgid "Save"
+msgstr "သိမ်းဆည်းပါ"
+
+msgid "Request Language"
+msgstr "ဘာသာစကား ကိုတောင်းဆိုရန်"
+
