@@ -1,3 +1,7 @@
+body {
+    background-color: #FAF8F8;
+}
+
 section.background2 {
     background-color: var(--secondary-bg-colour);
     width: 100%;
@@ -84,4 +88,42 @@ nav ul li a {
 .btn-other {
     background-color: var(--light-grey);
     color: black;
+}
+
+.form-group {
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 2%;
+    display: grid;
+    grid-template-rows: 20px 40px;
+}
+
+.form-group .control-label {
+    font-size: 1.2rem;
+    grid-row: 1;
+    grid-column: 1;
+    border-radius: 5px;
+}
+
+.form-group .form-control {
+    grid-row: 2;
+    font-size: initial;
+}
+
+.form-group select {
+    height: 30px;
+    padding-left: 3px;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none; 
+    background-color: white;
+    border-color: var(--light-grey);
+}
+
+.form-group .control-label.inner-label {
+    position: relative;
+    top: 23px;
+    left: 5px;
+    grid-column: 1;
+
 }
