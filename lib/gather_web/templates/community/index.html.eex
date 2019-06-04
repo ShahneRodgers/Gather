@@ -1,21 +1,10 @@
 <section class="communities background2">
   <h3><%= gettext "Communities" %></h3>
-  <h2><%= @region %></h2>
+  <h2><%= @user.region %></h2>
 </section>
 
-<h4> <%= gettext "Online communities in %{region}", region: @region %> </h4>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Region</th>
-      <th>Summary</th>
-      <th>Link</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+<h4> <%= gettext "Online communities in %{region}", region: @user.region %> </h4>
+<div class="online-communities">
 <%= for community <- @communities do %>
     <tr>
       <div id="community-<%= community.id %>" class="community-group image-thumbnail">
@@ -24,15 +13,22 @@
       </div>
     </tr>
 <% end %>
-  </tbody>
-</table>
+</div>
 
 <span><%= link "Add Community", to: Routes.community_path(@conn, :new) %></span>
 
-<h4> <%= gettext "%{region} Representatives", region: @region %></h4>
-<table class="representatives">
+<h4> <%= gettext "%{region} Representatives", region: @user.region %></h4>
+<div class="representatives">
 <%= for rep <- @representatives do %>
-
+  <div class="name"><%= if not is_nil(rep.user.nickname), do: rep.user.nickname, else: rep.user.name %></div>
+  <div class="email"><%= rep.email %></div>
+  <div class="summary"><%= rep.about %></div>
+  <div class="phone"><%= rep.phone %></div>
 <% end %>
-</table>
+</div>
 
+<%= if not Enum.any? @representatives, fn r -> r.user.id == @user.id end do %>
+  <span><%= link gettext("Become a representative"), to: Routes.user_path(@conn, :become_rep) %></span>
+<% else %>
+  <span><%= link gettext("Stop being a representative"), to: Routes.user_path(@conn, :remove_rep) %></span>
+<% end %>

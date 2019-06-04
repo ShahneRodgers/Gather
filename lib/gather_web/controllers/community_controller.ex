@@ -9,7 +9,7 @@ defmodule GatherWeb.CommunityController do
     user = Guardian.Plug.current_resource(conn)
     communities = Communities.list_communities(user.region)
     representatives = Users.list_representatives(user.region)
-    render(conn, "index.html", communities: communities, representatives: representatives, region: user.region)
+    render(conn, "index.html", communities: communities, representatives: representatives, user: user)
   end
 
   def new(conn, _params) do

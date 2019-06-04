@@ -38,6 +38,7 @@ section.background2 h2 {
 .gather-logo {
     width: 150px;
     max-width: 100%;
+    margin-left: 1%;
 }
 
 .gather-logo * {
@@ -125,5 +126,8 @@ nav ul li a {
     top: 23px;
     left: 5px;
     grid-column: 1;
+}
 
+.header {
+    text-align: center;
 }

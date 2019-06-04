@@ -141,4 +141,31 @@ defmodule GatherWeb.UserController do
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: Routes.user_path(conn, :index))
   end
+
+  def become_rep(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    changeset =
+      case Gather.Users.get_representative(user.id) do
+        nil -> %Gather.User.Representatives{}
+        rep -> rep
+      end
+      |> Gather.Users.change_representative()
+    render(conn, "rep.html", changeset: changeset)
+  end
+
+  def create_rep(conn, %{"representatives" => params}) do
+    user = Guardian.Plug.current_resource(conn)
+    Gather.Users.delete_representative(user.id)
+    case Gather.Users.create_representative(Map.put(params, "user_id", user.id)) do
+      {:ok, _} -> redirect(conn, to: Routes.community_path(conn, :index))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "rep.html", changeset: changeset)
+    end
+  end
+
+  def remove_rep(conn, _params) do
+    user = Guardian.Plug.current_resource(conn)
+    Gather.Users.delete_representative(user.id)
+    redirect(conn, to: Routes.community_path(conn, :index))
+  end
 end
