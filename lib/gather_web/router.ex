@@ -75,7 +75,7 @@ defmodule GatherWeb.Router do
   end
 
   scope "/admin", GatherWeb do
-    pipe_through :browser
+    pipe_through :maybe_authenticate # FIXME: ensure community leader eventually
 
     resources "/user", UserController
     get "/tasks/new", TaskController, :new
