@@ -64,6 +64,22 @@ nav ul li a {
     text-decoration: none;
 }
 
+nav ul li select {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 5px;
+    background: none;
+    font-weight: 300;
+    line-height: 1.4;
+    margin-top: 14%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 1.6rem;
+    border: none;
+}
+
 .btn {
     border: none;
     padding: 5px;
@@ -130,4 +146,44 @@ nav ul li a {
 
 .header {
     text-align: center;
+}
+
+.note {
+    margin: 5%;
+}
+
+.warning {
+    padding: 1% 5%;
+    background-color: #ffffb3;
+}
+
+.dropdown {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+
+}
+
+.dropdown-content {
+    display: none;
+    color: black;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    position: absolute;
+    background-color: var(--plain-bg-colour);
+    padding: 0;
+}
+
+.dropdown-content a {
+    border: var(--light-grey);
+    border-style: solid;
+    border-block-end-style: solid;
+    border-width: thin;
 }

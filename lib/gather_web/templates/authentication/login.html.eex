@@ -1,9 +1,43 @@
-<h2>Login</h2>
+<h2 class="header"><%= gettext "Login" %></h2>
 
 <%= form_for @conn, Routes.authentication_path(@conn, :login),  fn f -> %>
-	Username: <%= text_input f, :username %>
-	<br/>
-	Password: <%= password_input f, :password %>
-	<br/>
-	<%= submit "Login" %>
+	<div class="form-group">
+		<%= label f, gettext("Username"), class: "control-label" %>
+		<%= text_input f, :username, class: "form-control" %>
+		<%= error_tag f, :username %>
+  	</div>
+
+	<div class="form-group">
+		<%= label f, gettext("Password"), class: "control-label" %>
+		<%= password_input f, :password, class: "form-control" %>
+		<%= error_tag f, :password %>
+  	</div>
+	
+	<div class="form-group">
+		<%= submit gettext("Login"), class: "btn btn-main" %>
+	</div>
 <% end %>
+
+<div class="note">
+<% link = "<a href='#{Routes.page_path(@conn, :contact)}'> #{gettext("contact")} </a>" %>
+<%= gettext("""
+		Don't have an account? This website is only for refugees and former refugees in New Zealand,
+		so you can't automatically sign up. If you think you fit this and would like an account,
+		or if you just want to know more, please %{contact} us!
+		""", contact: link) |> raw() %>
+</div>
+
+<div class="warning">
+	<p>While this website is in development, <a href="<%= Routes.user_path(@conn, :new) %>">you can sign up</a>
+	and play around as much as you like. <b>Note: your account will be deleted once development is complete
+	without any warning.</b></p>
+	<p>If you want to help out, especially with <ul>
+		<li>Design</li>
+		<li>Translations</li>
+		<li>CSS / JavaScript</li>
+		<li>Content / website behaviour decisions</li>
+		<li>Getting the website to community leaders / the relevant agencies once it's built</li>
+		</ul>
+		please don't hesitate to contact us; we'd love your help!
+	</p>
+</div>

@@ -15,7 +15,7 @@
 <% end %>
 </div>
 
-<span><%= link "Add Community", to: Routes.community_path(@conn, :new) %></span>
+<span><%= link gettext("Add Community"), to: Routes.community_path(@conn, :new) %></span>
 
 <h4> <%= gettext "%{region} Representatives", region: @user.region %></h4>
 <div class="representatives">

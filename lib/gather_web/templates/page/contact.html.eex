@@ -5,7 +5,7 @@
                 Or do you just want to know more? Email us!
                 """ %></h3>
     <div class="contact">
-    <%= form_for @conn, "mailto:bydefault-gather-support@gmail.com", [method: "get", csrf_token: false, target: "_blank", rel: "noopener noreferrer"], fn f -> %>
+    <%= form_for @conn, "mailto:gather.techfugees@gmail.com", [method: "get", csrf_token: false, target: "_blank", rel: "noopener noreferrer", enctype: "multipart/form-data"], fn f -> %>
         <div class="form-group">
             Where are you living? <%= select f, :subject, @regions, class: "form-control" %>
         </div>

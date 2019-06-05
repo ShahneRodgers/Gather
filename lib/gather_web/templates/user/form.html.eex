@@ -1,20 +1,26 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      <p><%= gettext "Oops, something went wrong! Please check the errors below."%></p>
     </div>
   <% end %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, gettext("Name"), class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
+    <%= label f, gettext("Password"), class: "control-label" %>
     <%= password_input f, "password", class: "form-control" %>
     <%= error_tag f, :password %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, gettext("Is community leader?"), class: "control-label" %>
+    <%= checkbox f, :is_leader, class: "form-control" %>
+    <%= error_tag f, :is_leader %>
   </div>
 
   <div class="form-group">
