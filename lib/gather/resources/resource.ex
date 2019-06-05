@@ -26,7 +26,7 @@ defmodule Gather.Resources.Resource do
   def changeset(resource, attrs) do
     resource
     |> cast(attrs, [:link, :title, :summary, :format, :user_id, :region])
-    |> validate_required([:link, :title, :format, :user_id, :region])
+    |> validate_required([:link, :title, :format, :user_id])
     |> validate_change(:region, &Gather.Regions.validate_region/2)
     |> foreign_key_constraint(:user_id)
   end
