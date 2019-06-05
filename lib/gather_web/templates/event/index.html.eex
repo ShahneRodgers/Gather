@@ -18,12 +18,31 @@ document.addEventListener('DOMContentLoaded', function() {
           title: '<%= event.name %>',
           start: '<%= event.time %>',
           editable: false,
-          url: '<%= Routes.event_path(@conn, :show, event.id) %>'
+          extendedProps: {
+            "address": "<%= event.address %>",
+            "link": "<%= event.link %>",
+            "summary": "<%= event.summary %>",
+            "id": "<%= event.id %>"
+          }
         },
       <% end %>
     ],
     dateClick: function(info) {
       window.location.href = "<%= Routes.event_path(@conn, :new) %>?date=" + info.dateStr;
+    },
+    eventClick: function(info) {
+      // Add or hide the extended details on click.
+      var props = info.event.extendedProps;
+      if (info.el.classList.toggle("display-details")){
+        var template = document.createElement('div');
+        template.className = "event-details"
+        template.id = `event-${props['id']}`;
+        template.innerHTML = `<a href='${props['link']}'><div class='title'>${info.event.title}<div class='time'>${info.event.start.toLocaleTimeString()}</div></div><div class='address'>${props['address']}</div><div class='summary'>${props['summary']}</div>`;
+        info.el.insertAdjacentElement("afterend", template);
+      } else {
+        var details = document.getElementById(`event-${props['id']}`);
+        details.parentElement.removeChild(details);
+      }
     }
   });
 

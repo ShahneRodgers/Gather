@@ -10,3 +10,55 @@
     color: var(--light-grey);
     text-decoration: none;
 }
+
+.event-details {
+    background: var(--secondary-bg-colour);
+    float: left;
+    width: auto;
+    border: var(--main-bg-colour);
+    position: relative;
+    left: 100%;
+    top: -20px;
+    padding: 20px;
+    padding-top: 10px;
+    z-index: 5;
+    min-width: max-content;
+}
+
+.event-details a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: small;
+    margin-bottom: 30px;
+    font-family: monospace;
+    min-width: max-content;
+}
+
+.event-details .title {
+    font-size: x-large;
+    font-weight: 800;
+    color: var(--light-grey);
+}
+
+.event-details .time {
+    font-size: x-small;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.event-details .summary {
+    font-size: small;
+}
+
+.event-details .address {
+    font-size: large;
+    font-stretch: ultra-expanded;
+}
+
+.event-details a div {
+    z-index: 99;
+    position: relative;
+}
