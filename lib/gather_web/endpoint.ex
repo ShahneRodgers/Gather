@@ -12,7 +12,8 @@ defmodule GatherWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :gather,
-    gzip: false,
+    gzip: true,
+    cache_control_for_etags: "public, max-age=31536000",
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the

@@ -35,11 +35,11 @@
 .home h1 {
     color: var(--text-light-colour);
     font-weight: 900;
-    line-height: 1.3rem;
+    line-height: 130%;
     margin-bottom: 30px;
 }
 
 .home h3 {
     color: var(--text-dark-colour);
-    line-height: 1.3rem;
+    line-height: 130%;
 }

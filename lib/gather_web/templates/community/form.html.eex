@@ -5,19 +5,19 @@
     </div>
   <% end %>
 
-  <%= label f, gettext("name") %>
+  <%= label f, :name, gettext("Name") %>
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
 
-  <%= label f, gettext("region") %>
+  <%= label f, :region, gettext("Region") %>
   <%= select f, :region, @regions %>
   <%= error_tag f, :region %>
 
-  <%= label f, gettext("summary") %>
+  <%= label f, :summary, gettext("Summary") %>
   <%= text_input f, :summary %>
   <%= error_tag f, :summary %>
 
-  <%= label f, gettext("link") %>
+  <%= label f, :link, gettext("Link") %>
   <%= text_input f, :link %>
   <%= error_tag f, :link %>
 

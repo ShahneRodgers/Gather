@@ -2,7 +2,7 @@
     <% user = Guardian.Plug.current_resource(@conn) %>
     <ul>
     <li>
-        <select onChange="setLocale(this.value)">
+        <select onChange="setLocale(this.value)" aria-label="<%= gettext("Language") %>">
             <option selected><%= gettext "Language" %></option>
             <%= for language <- @available_languages do %>
                 <option value="<%= elem(language, 0) %>"><%= elem(language, 1) %></option>
