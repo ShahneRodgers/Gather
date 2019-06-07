@@ -164,4 +164,27 @@ defmodule Gather.Resources do
     |> Comments.changeset(attrs)
     |> Repo.insert()
   end
+
+  @doc """
+  Gets a comment by id
+  """
+  def get_comment(id) do
+    Repo.get(Comments, id)
+  end
+
+  @doc """
+  Updates a comment
+  """
+  def update_comment(%Comments{} = comment, attrs) do
+    comment
+    |> Comments.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a comment
+  """
+  def delete_comment(%Comments{} = comment) do
+    Repo.delete(comment)
+  end
 end

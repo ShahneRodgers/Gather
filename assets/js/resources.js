@@ -4,15 +4,6 @@ export function vote(resource_id, type){
     req.send(null);
 }
 
-export function submit_comment(path, textarea, csrf_token){
-    var req = new XMLHttpRequest();
-    req.open('POST', path);
-    req.setRequestHeader("X-CSRF-Token", csrf_token);
-    req.send(textarea.value);
-    
-    textarea.value = "";
-}
-
 export function complete_task(subtask_id, path, csrf_token){
     var req = new XMLHttpRequest();
     req.open('GET', path);

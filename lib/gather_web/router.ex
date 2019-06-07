@@ -55,8 +55,10 @@ defmodule GatherWeb.Router do
     pipe_through :ensure_profile
 
     get "/start", TaskController, :index
-    post "/tasks/comment/:task_id", TaskController, :comment
     get "/tasks/complete/:subtask_id", TaskController, :complete
+    post "/tasks/comment/:task_id", CommentController, :new
+    post "/tasks/comment/:task_id/update/:comment_id", CommentController, :update
+    get "/tasks/comment/:task_id/delete/:comment_id", CommentController, :delete
 
     post "/resources/search", ResourcesController, :search
     resources "/resources", ResourcesController, only: [:index, :new, :create]
@@ -67,7 +69,9 @@ defmodule GatherWeb.Router do
 
     get "/resources/category", ResourcesController, :category
     get "/resources/votes/:resource_id/:type", ResourcesController, :vote
-    post "/resources/comment/:resource_id", ResourcesController, :comment
+    post "/resources/comment/:resource_id", CommentController, :new
+    post "/resources/comment/:resource_id/update/:comment_id", CommentController, :update
+    get "/resources/comment/:resource_id/delete/:comment_id", CommentController, :delete
 
     get "/users/representative", UserController, :become_rep
     post "/users/representative", UserController, :create_rep

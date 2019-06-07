@@ -98,14 +98,4 @@ defmodule GatherWeb.ResourcesController do
       end
     end
   end
-
-  def comment(req_conn, %{"resource_id" => resource_id}) do
-    {:ok, body, conn} = Plug.Conn.read_body(req_conn)
-    user = Guardian.Plug.current_resource(conn)
-
-    %{"resource_id" => resource_id, "comment" => body, "user_id" => user.id}
-    |> Resources.add_comment()
-
-    send_resp(conn, 200, "")
-  end
 end

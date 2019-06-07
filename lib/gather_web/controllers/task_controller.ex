@@ -76,16 +76,6 @@ defmodule GatherWeb.TaskController do
     end
   end
 
-  def comment(req_conn, %{"task_id" => task_id}) do
-    {:ok, body, conn} = Plug.Conn.read_body(req_conn)
-    user = Guardian.Plug.current_resource(conn)
-
-    %{"task_id" => task_id, "comment" => body, "user_id" => user.id}
-    |> Tasks.add_comment()
-
-    send_resp(conn, 200, "")
-  end
-
   def complete(conn, %{"subtask_id" => subtask_id}) do
     user = Guardian.Plug.current_resource(conn)
 

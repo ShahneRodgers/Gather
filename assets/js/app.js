@@ -16,7 +16,8 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
-import {vote, submit_comment, complete_task, setLocale} from "./resources"
+import { vote, complete_task, setLocale } from "./resources"
+import { submitComment, editComment, updateComment, deleteComment } from "./comments"
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -25,10 +26,14 @@ import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 
 window.vote = vote;
-window.submit_comment = submit_comment;
 window.complete_task = complete_task;
 
 window.Calendar = Calendar;
 window.dayGridPlugin = dayGridPlugin;
 window.interactionPlugin = interactionPlugin;
 window.setLocale = setLocale;
+
+window.submitComment = submitComment;
+window.editComment = editComment;
+window.deleteComment = deleteComment;
+window.updateComment = updateComment;

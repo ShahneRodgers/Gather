@@ -182,6 +182,30 @@ defmodule Gather.Tasks do
   end
 
   @doc """
+  Gets a comment by id
+  """
+  def get_comment(id) do
+    Repo.get(Comments, id)
+  end
+
+  @doc """
+  Updates a comment
+  """
+  def update_comment(%Comments{} = comment, attrs) do
+    comment
+    |> Comments.changeset(attrs)
+    |> IO.inspect()
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a comment
+  """
+  def delete_comment(%Comments{} = comment) do
+    Repo.delete(comment)
+  end
+
+  @doc """
   Marks a task as completed
   """
   def add_completed(attrs) do

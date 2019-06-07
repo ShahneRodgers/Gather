@@ -4,16 +4,25 @@
         <%= for comment <- @comments do %>
             <div class="comment">
                 <div class="author"><%= Map.get(@users, comment.user_id) %></div>
-                <div class="time">
-                    <% d = comment.inserted_at %>
-                    <%= "#{d.year}/#{d.month}/#{d.day} #{d.hour}:#{d.minute}" %>
+                
+                <div class="details">
+                    <%= if comment.user_id == Guardian.Plug.current_resource(@conn).id do %>
+                        <img class="edit" src="<%= Routes.static_path(@conn, "/images/edit.svg") %>" onclick="javascript:editComment(this.parentElement.parentElement, <%= comment.id %>);"/>
+                        <img class="delete" src="<%= Routes.static_path(@conn, "/images/delete.svg") %>" onclick="javascript:deleteComment(this.parentElement.parentElement, '<%= @path %>', <%= comment.id %>);"/>
+                    <% end %>
+
+                    <div class="time">
+                        <% d = comment.inserted_at %>
+                        <%= "#{d.year}/#{d.month}/#{d.day} #{d.hour}:#{d.minute}" %>
+                    </div>
                 </div>
-                <div class="content"><%= comment.comment %></div>
+                <div id="comment-<%= comment.id %>" class="content"><%= comment.comment %></div>
+                <a class="btn btn-main hide" onclick="javascript:updateComment('<%= @path %>/update/<%= comment.id %>', this.parentElement, '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
             </div>
         <% end %>
         <div class="new-comment">
             <textarea id="new-content-<%= @id %>"></textarea>
-            <a class="btn btn-main" onclick="javascript:submit_comment('<%= @path %>', document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+            <a class="btn btn-main" onclick="javascript:submitComment('<%= @path %>', document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
         </div>
     </div>
 </div>
