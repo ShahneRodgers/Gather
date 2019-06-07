@@ -29,7 +29,7 @@
 
 <div class="warning">
 	<p>While this website is in development, <a href="<%= Routes.user_path(@conn, :new) %>">you can sign up</a>
-	and play around as much as you like. <b>Note: your account will be deleted once development is complete
+	and play around as much as you like. <b>Note: while the website is in development, your account may be deleted
 	without any warning.</b></p>
 	<p>If you want to help out, especially with <ul>
 		<li>Design</li>
