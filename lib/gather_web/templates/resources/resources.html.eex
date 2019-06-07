@@ -1,10 +1,12 @@
 <% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
 <%= for resource <- @resources do %>
     <div class="resource">
-        <img class="votes votes-up" src="<%= Routes.static_path(@conn, "/images/up.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'up')"/>
-        <p class="votes votes-score"><%= Gather.Resources.Resource.score(resource) %></p>
-        <img class="votes votes-down" src="<%= Routes.static_path(@conn, "/images/down.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'down')"/>
-        
+        <div class="votes">
+            <img class="votes votes-up" src="<%= Routes.static_path(@conn, "/images/up.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'up')"/>
+            <p class="votes votes-score"><%= Gather.Resources.Resource.score(resource) %></p>
+            <img class="votes votes-down" src="<%= Routes.static_path(@conn, "/images/down.svg") %>" onclick="javascript:vote(<%= resource.id %>, 'down')"/>
+        </div>
+
         <%= render "resource_detail.html", Map.put(assigns, :resource, resource) %>
         
         <%= render_shared "comments.html", Map.merge(assigns, %{id: resource.id, comments: resource.comments, csrf_token: csrf_token, path: Routes.resources_path(@conn, :comment, resource.id)}) %>

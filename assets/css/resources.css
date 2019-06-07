@@ -52,7 +52,7 @@ div.resource {
     margin-right: 5%;
     margin-top: 20px;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
     grid-template-columns: 10% auto auto;
     grid-template-areas: "vote title languages"
                         ". text ."
@@ -60,13 +60,31 @@ div.resource {
 }
 
 .resource .votes {
-    float: left;
+    grid-area: vote;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "up" "score" "down";
+    width: min-content;
+    margin-left: 10%;
+    height: min-content;
 }
 
-.resource .votes p {
-    margin-top: -15px;
-    margin-left: 10px;
-    margin-bottom: -7px;
+.resource .votes * {
+    margin: 0;
+}
+
+.votes.votes-up {
+    grid-area: up;
+}
+
+.votes.votes-score {
+    grid-area: score;
+    width: 100%;
+    text-align: center;
+}
+
+.votes .votes-down {
+    grid-area: down;
 }
 
 .resource .votes img {
@@ -87,34 +105,17 @@ div.resource {
     grid-row-start: 1;
     grid-column: 2;
     align-self: center;
+    text-decoration: none;
+    color: black;
 }
 
 .resource a img {
     width: 15px;
 }
 
-.votes.votes-up {
-    grid-column: 1;
-    grid-row-start: 1;
-    margin-top: -10%;
-}
-
-.votes.votes-score {
-    grid-column: 1;
-    grid-row-start: 1;
-    margin-left: 28%;
-}
-
 img.votes {
     width: 50px;
     margin-left: 10%;
-}
-
-.votes.votes-down {
-    grid-column: 1;
-    grid-row-start: 1;
-    margin-top: 15%;
-    align-self: end;
 }
 
 .resource .author {
@@ -133,7 +134,20 @@ img.votes {
 }
 
 .resource .languages {
-    grid-column: 3;
-    text-align: right;
-    margin-right: 30px;
+    grid-area: languages;
+    direction: rtl;
+    display: flex;
+}
+
+.resource .languages p {
+    background-color: #E9B780;
+    text-align: center;
+    width: min-content;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: min-content;
+    border-radius: 50%;
+    margin: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
