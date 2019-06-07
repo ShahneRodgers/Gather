@@ -54,6 +54,9 @@ div.resource {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 10% auto auto;
+    grid-template-areas: "vote title languages"
+                        ". text ."
+                        "comments comments comments"
 }
 
 .resource .votes {
@@ -129,32 +132,8 @@ img.votes {
     grid-column: 2;
 }
 
-div.comments {
-    grid-row: 3;
-}
-
-.hide-comments {
-    display: none;
-}
-
-img.comments {
-    grid-row: 3;
-    grid-column-start: 1;
-    width: 50px;
-    margin-left: 20px;
-}
-
 .resource .languages {
     grid-column: 3;
     text-align: right;
     margin-right: 30px;
-}
-
-.comments a {
-    float: right;
-
-}
-
-.comments textarea {
-    width: 600px;
 }

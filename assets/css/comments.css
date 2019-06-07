@@ -1,0 +1,49 @@
+
+.comments {
+    grid-area: comments;
+}
+
+img.comments {
+    grid-row: 3;
+    grid-column-start: 1;
+    width: 50px;
+    margin-left: 20px;
+}
+
+.comment {
+    border-color: var(--light-grey);
+    border-style: solid;
+    border-width: thin;
+    margin: 5px;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: 0.1fr 0.9fr;
+}
+
+.comments .new-comment {
+    padding: 5px;
+}
+
+.comment .content {
+    grid-row: 2;
+}
+
+.comment .time {
+    grid-row: 1;
+    font-size: x-small;
+    text-align: right;
+}
+
+.comment .author {
+    grid-row: 1;
+}
+
+.comments a {
+    float: right;
+
+}
+
+.comments textarea {
+    width: 100%;
+    height: 50px;
+}

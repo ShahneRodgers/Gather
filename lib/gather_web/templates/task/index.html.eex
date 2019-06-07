@@ -3,26 +3,26 @@
 </section>
 
 <% csrf_token = raw Plug.CSRFProtection.get_csrf_token() %>
-<ol>
-  <%= for task <- @tasks do %>
-    <div class="task-item">
-      <li>
-        <h4><%= Gettext.gettext(GatherWeb.Gettext, task.title) %></h4>
-        <ul>
+<ol class="start">
+  <%= for {task, i} <- Enum.with_index(@tasks, 1) do %>
+      <li class="task-item">
+        <h4 class="title"><%= Gettext.gettext(GatherWeb.Gettext, Integer.to_string(i)) %>. <%= Gettext.gettext(GatherWeb.Gettext, task.title) %></h4>
+        <ul class="subtasks">
           <%= for subtask <- task.subtasks do %>
-            <li>
+            <li class="subtask" onclick="javascript:document.getElementById('resource-for-<%= subtask.id %>').classList.toggle('hide')">
               <div id="<%= subtask.id %>" class="<%= if (Enum.member? @completed, subtask.id), do: "completed", else: "todo" %>" onclick="javascript:complete_task(<%= subtask.id %>, '<%= Routes.task_path(@conn, :complete, subtask.id) %>', '<%= csrf_token %>')"></div>
-              <h5><%= Gettext.gettext(GatherWeb.Gettext, subtask.title) %></h5>
-              <%= for resource <- subtask.resources do %>
-                <div class="task-resource">
-                  <%= render GatherWeb.ResourcesView, "resource_detail.html", Map.put(assigns, :resource, resource) %>
-                </div>
-              <% end %>
+              <div class="title"><%= Gettext.gettext(GatherWeb.Gettext, subtask.title) %></div>
+              <div class="task-resources hide" id="resource-for-<%= subtask.id %>">
+                <%= for resource <- subtask.resources do %>
+                  <div class="task-resource">
+                    <%= render GatherWeb.ResourcesView, "resource_detail.html", Map.put(assigns, :resource, resource) %>
+                  </div>
+                <% end %>
+              </div>
             </li>
           <% end %>
         </ul>
         <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path: Routes.task_path(@conn, :comment, task.id)}) %>
       </li>
-      </div>
   <% end %> 
 </ol>

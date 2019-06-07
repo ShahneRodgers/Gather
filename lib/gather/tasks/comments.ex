@@ -14,9 +14,9 @@ defmodule Gather.Tasks.Comments do
   @doc false
   def changeset(comments, attrs) do
     comments
-    |> cast(attrs, [:comment, :task_id, :resource_id])
-    |> validate_required([:comment, :task_id, :resource_id])
+    |> cast(attrs, [:comment, :task_id, :user_id])
+    |> validate_required([:comment, :task_id, :user_id])
     |> foreign_key_constraint(:task_id)
-    |> foreign_key_constraint(:resource_id)
+    |> foreign_key_constraint(:user_id)
   end
 end

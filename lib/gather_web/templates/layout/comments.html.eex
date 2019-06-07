@@ -1,16 +1,19 @@
 <div class="comments">
-    <img class="comments" src="<%= Routes.static_path(@conn, "/images/comment.svg") %>" onclick="javascript:document.getElementById('comment-content-<%= @id %>').classList.toggle('hide-comments');"/>
-    <div class="comments hide-comments" id="comment-content-<%= @id %>">
+    <img class="comments" src="<%= Routes.static_path(@conn, "/images/comment.svg") %>" onclick="javascript:document.getElementById('comment-content-<%= @id %>').classList.toggle('hide');"/>
+    <div class="comments hide" id="comment-content-<%= @id %>">
         <%= for comment <- @comments do %>
             <div class="comment">
-                <div class="content"><%= comment.comment %></div>
-                <div class="time"><%= comment.inserted_at %></div>
                 <div class="author"><%= Map.get(@users, comment.user_id) %></div>
+                <div class="time">
+                    <% d = comment.inserted_at %>
+                    <%= "#{d.year}/#{d.month}/#{d.day} #{d.hour}:#{d.minute}" %>
+                </div>
+                <div class="content"><%= comment.comment %></div>
             </div>
         <% end %>
         <div class="new-comment">
             <textarea id="new-content-<%= @id %>"></textarea>
-            <a class="btn btn-main" onclick="javascript:submit_comment(@path, document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+            <a class="btn btn-main" onclick="javascript:submit_comment('<%= @path %>', document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
         </div>
     </div>
 </div>

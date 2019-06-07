@@ -7,6 +7,7 @@ defmodule GatherWeb.TaskController do
     user = Guardian.Plug.current_resource(conn)
 
     tasks = Tasks.list_tasks(user.region)
+            |> Enum.sort_by(fn t -> t.order end)
     user_completed_tasks = Tasks.list_user_completed_subtask_ids(user)
 
     users = Enum.flat_map(tasks, fn t -> Enum.flat_map(t.subtasks, fn s -> Enum.map(s.resources, fn r -> r.user_id end) end) end)

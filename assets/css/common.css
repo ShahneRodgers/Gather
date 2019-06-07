@@ -187,3 +187,7 @@ nav ul li select {
     border-block-end-style: solid;
     border-width: thin;
 }
+
+.hide {
+    display: none;
+}
