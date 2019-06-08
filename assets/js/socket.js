@@ -54,10 +54,35 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, connect to the socket:
 socket.connect()
 
+function addComment(comments_div, payload){
+  var comment_div = comments_div.namedItem("comment-content-" + payload.id);
+  if (comment_div != null){
+    var new_comment = document.createElement("div");
+    new_comment.innerHTML = payload.html;
+    comment_div.insertBefore(new_comment.firstChild, comment_div.firstChild);
+  }
+}
+
+var task_comments = document.getElementsByClassName('comments tasks');
+var resource_comments = document.getElementsByClassName('comments resources');
+
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+var channel = socket.channel("comments", {});
+
+if (task_comments.length > 0){
+  channel.on("tasks", payload => {
+    addComment(task_comments, payload);
+   });
+}
+
+if (resource_comments.length > 0){
+  channel.on("resources", payload => {
+    addComment(resource_comments, payload);
+   });
+}
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+  .receive("error", resp => { console.log("Unable to join", resp) });
 
 export default socket

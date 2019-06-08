@@ -1,0 +1,17 @@
+<div class="comment">
+    <div class="author"><%= Map.get(@users, @comment.user_id) %></div>
+    
+    <div class="details">
+        <%= if @comment.user_id == Guardian.Plug.current_resource(@conn).id do %>
+            <img class="edit" src="<%= Routes.static_path(@conn, "/images/edit.svg") %>" onclick="javascript:editComment(this.parentElement.parentElement, <%= @comment.id %>);"/>
+            <img class="delete" src="<%= Routes.static_path(@conn, "/images/delete.svg") %>" onclick="javascript:deleteComment(this.parentElement.parentElement, '<%= @path_helper.(@conn, :delete, @id, @comment.id) %>');"/>
+        <% end %>
+
+        <div class="time">
+            <% d = @comment.inserted_at %>
+            <%= "#{d.year}/#{d.month}/#{d.day} #{d.hour}:#{d.minute}" %>
+        </div>
+    </div>
+    <div id="comment-<%= @comment.id %>" class="content"><%= @comment.comment %></div>
+    <a class="btn btn-main hide" onclick="javascript:updateComment('<%= @path_helper.(@conn, :update, @id, @comment.id) %>', this.parentElement, '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+</div>

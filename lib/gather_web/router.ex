@@ -13,11 +13,22 @@ defmodule GatherWeb.Router do
   pipeline :authenticate do
     plug(:browser)
     plug(Gather.Accounts.AuthenticatedPipeline)
+    plug(:put_user_token)
   end
 
   pipeline :maybe_authenticate do
     plug(:browser)
     plug(Gather.Accounts.MaybeAuthenticatedPipeline)
+    plug(:put_user_token)
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = Guardian.Plug.current_resource(conn) do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
+    end
   end
 
   pipeline :ensure_profile do

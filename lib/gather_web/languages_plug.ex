@@ -1,6 +1,5 @@
 defmodule GatherWeb.Languages.LanguagesPlug do
   import Plug.Conn
-  import GatherWeb.Gettext
 
   @locales Gettext.known_locales(GatherWeb.Gettext)
 
