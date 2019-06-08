@@ -8,7 +8,7 @@
                 <div class="details">
                     <%= if comment.user_id == Guardian.Plug.current_resource(@conn).id do %>
                         <img class="edit" src="<%= Routes.static_path(@conn, "/images/edit.svg") %>" onclick="javascript:editComment(this.parentElement.parentElement, <%= comment.id %>);"/>
-                        <img class="delete" src="<%= Routes.static_path(@conn, "/images/delete.svg") %>" onclick="javascript:deleteComment(this.parentElement.parentElement, '<%= @path %>', <%= comment.id %>);"/>
+                        <img class="delete" src="<%= Routes.static_path(@conn, "/images/delete.svg") %>" onclick="javascript:deleteComment(this.parentElement.parentElement, '<%= @path_helper.(@conn, :delete, @id, comment.id) %>');"/>
                     <% end %>
 
                     <div class="time">
@@ -17,12 +17,12 @@
                     </div>
                 </div>
                 <div id="comment-<%= comment.id %>" class="content"><%= comment.comment %></div>
-                <a class="btn btn-main hide" onclick="javascript:updateComment('<%= @path %>/update/<%= comment.id %>', this.parentElement, '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+                <a class="btn btn-main hide" onclick="javascript:updateComment('<%= @path_helper.(@conn, :update, @id, comment.id) %>', this.parentElement, '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
             </div>
         <% end %>
         <div class="new-comment">
             <textarea id="new-content-<%= @id %>"></textarea>
-            <a class="btn btn-main" onclick="javascript:submitComment('<%= @path %>', document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
+            <a class="btn btn-main" onclick="javascript:submitComment('<%= @path_helper.(@conn, :new, @id, []) %>', document.getElementById('new-content-<%= @id %>'), '<%= @csrf_token %>');"><%= gettext "Submit" %></a>
         </div>
     </div>
 </div>

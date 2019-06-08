@@ -101,7 +101,7 @@ div.resource {
     grid-column: 1;
 }
 
-.resource a {
+.resource .resource-link {
     grid-row-start: 1;
     grid-column: 2;
     align-self: center;
@@ -109,7 +109,7 @@ div.resource {
     color: black;
 }
 
-.resource a img {
+.resource .resource-link img {
     width: 15px;
 }
 

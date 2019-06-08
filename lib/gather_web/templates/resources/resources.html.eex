@@ -9,7 +9,7 @@
 
         <%= render "resource_detail.html", Map.put(assigns, :resource, resource) %>
         
-        <%= render_shared "comments.html", Map.merge(assigns, %{id: resource.id, comments: resource.comments, csrf_token: csrf_token, path: Routes.resource_comment_path(@conn, :new, resource.id)}) %>
+        <%= render_shared "comments.html", Map.merge(assigns, %{id: resource.id, comments: resource.comments, csrf_token: csrf_token, path_helper: &Routes.resource_comment_path/4}) %>
     </div>
 <% end %>
 

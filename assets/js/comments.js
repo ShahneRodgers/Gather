@@ -36,9 +36,9 @@ export function editComment(commentDiv, commentId){
     commentDiv.getElementsByTagName("a")[0].classList.toggle("hide");
 }
 
-export function deleteComment(commentDiv, path, commentId){
+export function deleteComment(commentDiv, path){
     var req = new XMLHttpRequest();
-    req.open('GET', path + '/delete/' + commentId);
+    req.open('GET', path);
     req.send(null);
 
     commentDiv.parentElement.removeChild(commentDiv);

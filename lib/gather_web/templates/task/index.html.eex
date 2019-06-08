@@ -22,7 +22,7 @@
             </li>
           <% end %>
         </ul>
-        <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path: Routes.task_comment_path(@conn, :new, task.id)}) %>
+        <%= render_shared "comments.html", Map.merge(assigns, %{id: task.id, comments: task.comments, csrf_token: csrf_token, path_helper: &Routes.task_comment_path/3}) %>
       </li>
   <% end %> 
 </ol>

@@ -1,4 +1,4 @@
-<a href="<%= @resource.link %>" target="_blank" rel="noopener noreferrer nofollow">
+<a class="resource-link" href="<%= @resource.link %>" target="_blank" rel="noopener noreferrer nofollow">
     <div class="title"><%= @resource.title %></div>
     <img src="<%= Routes.static_path(@conn, "/images/link.svg") %>"/>
     <div class="author"><%= Map.get(@users, @resource.user_id) %></div>
