@@ -16,7 +16,7 @@ defmodule GatherWeb.CommentController do
     update_comment(conn, comment_id, &Tasks.get_comment/1, &Tasks.update_comment/2)
   end
 
-  def update(conn, %{"resources_id" => _, "comment_id" => comment_id}) do
+  def update(conn, %{"resource_id" => _, "comment_id" => comment_id}) do
     update_comment(conn, comment_id, &Resources.get_comment/1, &Resources.update_comment/2)
   end
 
@@ -24,7 +24,7 @@ defmodule GatherWeb.CommentController do
     delete_comment(conn, comment_id, &Tasks.get_comment/1, &Tasks.delete_comment/1)
   end
 
-  def delete(conn, %{"resources_id" => _, "comment_id" => comment_id}) do
+  def delete(conn, %{"resource_id" => _, "comment_id" => comment_id}) do
     delete_comment(conn, comment_id, &Resources.get_comment/1, &Resources.delete_comment/1)
   end
 

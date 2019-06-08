@@ -56,9 +56,9 @@ defmodule GatherWeb.Router do
 
     get "/start", TaskController, :index
     get "/tasks/complete/:subtask_id", TaskController, :complete
-    post "/tasks/comment/:task_id", CommentController, :new
-    post "/tasks/comment/:task_id/update/:comment_id", CommentController, :update
-    get "/tasks/comment/:task_id/delete/:comment_id", CommentController, :delete
+    post "/tasks/comment/:task_id", CommentController, :new, as: :task_comment
+    post "/tasks/comment/:task_id/update/:comment_id", CommentController, :update, as: :task_comment
+    get "/tasks/comment/:task_id/delete/:comment_id", CommentController, :delete, as: :task_comment
 
     post "/resources/search", ResourcesController, :search
     resources "/resources", ResourcesController, only: [:index, :new, :create]
@@ -69,9 +69,9 @@ defmodule GatherWeb.Router do
 
     get "/resources/category", ResourcesController, :category
     get "/resources/votes/:resource_id/:type", ResourcesController, :vote
-    post "/resources/comment/:resource_id", CommentController, :new
-    post "/resources/comment/:resource_id/update/:comment_id", CommentController, :update
-    get "/resources/comment/:resource_id/delete/:comment_id", CommentController, :delete
+    post "/resources/comment/:resource_id", CommentController, :new, as: :resource_comment
+    post "/resources/comment/:resource_id/update/:comment_id", CommentController, :update, as: :resource_comment
+    get "/resources/comment/:resource_id/delete/:comment_id", CommentController, :delete, as: :resource_comment
 
     get "/users/representative", UserController, :become_rep
     post "/users/representative", UserController, :create_rep
