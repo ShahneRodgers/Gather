@@ -1,35 +1,30 @@
 .home {
     width: 100%;
-    padding-top: 10%;
-    padding-left: 10%;
-    padding-bottom: 12%;
-
+    background-color: var(--main-bg-colour);
+    z-index: 1;
 }
 
-.home::before {
+.home > .words {
     background-image: url(/images/welcome.svg);
     background-size: 200%;
     content: "";
     display: block;
     position: absolute;
-    top: -30px;
-    left: -100px;
     width: 100%;
     height: 140%;
     opacity: 0.15;
-    z-index: -2;
+    z-index: 2;
+    margin-top: -10%;
+    margin-left: -10%;
 }
 
-.home::after {
-    background-color: var(--main-bg-colour);
-    top: 10%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: block;
-    content: "";
-    z-index: -3; 
+.home > .content {
+    position: relative;
+    z-index: 3;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 12%;
 }
 
 .home h1 {
