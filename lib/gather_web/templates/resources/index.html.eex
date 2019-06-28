@@ -1,8 +1,10 @@
 <section class="resources background2">
     <h2><%= gettext "Search for resources" %></h2>
     <%= form_for @conn, Routes.resources_path(@conn, :search), fn f -> %>
-        <%= text_input f, :search, placeholder: gettext("What do you need help with?"), class: "search-box" %>
-        <%= submit "Submit", class: "btn btn-main btn-square search-submit" %>
+        <div class="search">
+            <%= text_input f, :search, placeholder: gettext("What do you need help with?"), class: "search-box" %>
+            <%= submit "Submit", class: "btn btn-main btn-square search-submit" %>
+        </div>
         <div class="filter">
             <%= select f, :category, Enum.map(@categories, &{get_category_name(&1), &1}), prompt: "Category", class: "resource-type" %>
             <%= select f, :author, @authors, prompt: "Author", class: "resource-type" %>

@@ -6,34 +6,12 @@ body {
 section.background2 {
     background-color: var(--secondary-bg-colour);
     width: 100%;
-    padding-top: 5%;
-    padding-left: 7%;
-    padding-bottom: 5%;
+    padding: 5% 7%;
 }
 
 section.background2 h2 {
     color: white;
     font-weight: bold;
-}
-
-.search-box {
-    border-radius: 10px;
-    background-color: white;
-    width: 60%;
-    height: 50px;
-    padding-left: 10px;
-    color: #000000;
-    font-family: 'Helvetica', 'Arial', sans-serif;
-    font-size: 1.5em;
-}
-
-.search-box::placeholder{
-    color: var(--light-grey);
-}
-
-.btn.search-submit {
-    height: 47px;
-    width: 10%;
 }
 
 .gather-logo {

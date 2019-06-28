@@ -13,21 +13,25 @@
     box-sizing: unset;
     padding-left: 7%;
     padding-right: 7%;
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }
 
 .categories h4 {
     font-size: 3.6rem;
     letter-spacing: 0.5rem;
     line-height: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .btn.category {
-    width: 20%;
-    height: 20%;
-    margin: 10px;
+    width: 20rem;
+    height: 20rem;
+    margin: 2rem;
     background-color: white;
+    flex: 0 0 auto;
 }
 
 .btn.category img {
