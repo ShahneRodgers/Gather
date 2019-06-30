@@ -2,7 +2,7 @@
   <div class="words"></div>
   <div class="content">
     <h1><%= gettext "Welcome to %{name}!", name: "Gather" %></h1>
-    <h3>A community focused website for everything that refugees need.</h3>
+    <h2>A community focused website for everything that refugees need.</h2>
     <a class="btn btn-main" href="<%= Routes.authentication_path(@conn, :login) %>">Login</a>
     <a class="btn btn-other" href="<%= Routes.page_path(@conn, :contact) %>">Don't have an account?</a>
   </div>

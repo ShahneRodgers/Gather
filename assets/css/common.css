@@ -1,7 +1,11 @@
-body {
+body{
     background-color: #FAF8F8;
     font-family: 'Avenir';
-}
+    font-size:1.6rem;
+    font-weight:300;
+    line-height:1.6rem;
+    margin: 0%;
+  }
 
 section.background2 {
     background-color: var(--secondary-bg-colour);
@@ -61,15 +65,15 @@ nav ul li select {
 
 .btn {
     border: none;
-    padding: 5px;
-    min-width: 80px;
-    min-height: 30px;
+    padding: 2rem;
+    min-width: max-content;
+    min-height: max-content;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    border-radius: 30px;
+    border-radius: 3rem;
     font-weight: 500;
-    height: 35px;
+    margin: 0.5rem;
 }
 
 .btn-main {
@@ -87,11 +91,18 @@ nav ul li select {
 }
 
 .form-group {
-    margin-left: 5%;
-    margin-right: 10%;
-    margin-top: 2%;
     display: grid;
-    grid-template-rows: 20px 40px;
+    grid-template-rows: auto auto;
+    margin-bottom: 1rem;
+}
+
+.form-group .label {
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+
+.form-group textarea {
+    height: 10rem;
 }
 
 .form-group .control-label {
