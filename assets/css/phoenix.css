@@ -70,15 +70,9 @@ header {
 header section {
   align-items: center;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
 }
-header section :first-child {
-  order: 2;
-}
-header section :last-child {
-  order: 1;
-}
+
 header nav ul,
 header nav li {
   margin: 0;
@@ -93,17 +87,4 @@ header nav ul {
 }
 header nav a {
   display: block;
-}
-
-@media (min-width: 40.0rem) { /* Small devices (landscape phones, 576px and up) */
-  header section {
-    flex-direction: row;
-  }
-  header nav ul {
-    margin: 1rem;
-  }
-  .phx-logo {
-    flex-basis: 527px;
-    margin: 2rem 1rem;
-  }
 }

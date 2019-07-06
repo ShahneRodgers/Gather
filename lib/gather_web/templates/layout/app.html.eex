@@ -10,11 +10,17 @@
   </head>
   <body>
     <header>
-      <section class="container">
-        <%= render "navigation.html", assigns %>
+      <section class="nav-container">
         <a href="/" class="gather-logo">
           <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Gather Logo"/>
         </a>
+        <input type="checkbox" class="mobile-dropdown"/>
+        <div class="selector-image">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <%= render "navigation.html", assigns %>
       </section>
     </header>
     <main role="main" class="container">
