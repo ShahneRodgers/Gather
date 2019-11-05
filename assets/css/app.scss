@@ -9,3 +9,5 @@
 @import "./search.css";
 @import "./start.css";
 @import "./events.css";
+@import "~foundation-sites/scss/foundation";
+@include foundation-everything();
