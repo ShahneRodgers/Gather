@@ -10,22 +10,18 @@
   </head>
   <body>
     <header>
-      <section class="nav-container">
-        <a href="/" class="gather-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Gather Logo"/>
-        </a>
-        <input type="checkbox" class="mobile-dropdown"/>
-        <div class="selector-image">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <ul class="nav menu">
+        <li>
+          <a href="/" class="nav__logo">
+            <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Gather Logo"/>
+          </a>
+        </li>
         <%= render "navigation.html", assigns %>
       </section>
     </header>
-    <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <main role="main" class="grid-container">
+      <p class="alert" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert--danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script>window.userToken = "<%= assigns[:user_token] %>";</script>

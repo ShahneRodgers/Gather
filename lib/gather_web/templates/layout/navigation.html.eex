@@ -1,6 +1,6 @@
-<nav role="navigation">
+
     <% user = Guardian.Plug.current_resource(@conn) %>
-    <ul>
+
     <li>
         <select onChange="setLocale(this.value)" aria-label="<%= gettext("Language") %>">
             <option selected><%= gettext "Language" %></option>
@@ -23,8 +23,6 @@
     <%= if user do %>
         <a href="<%= Routes.authentication_path(@conn, :logout)%>"><%= Gettext.gettext "Logout" %></a>
     <% else %>
-        <a href="<%= Routes.authentication_path(@conn, :login)%>" class="btn btn-main"><%= Gettext.gettext "Login" %></a>
+        <a href="<%= Routes.authentication_path(@conn, :login)%>" class="nav__button"><%= Gettext.gettext "Login" %></a>
     <% end %>
     </li>
-    </ul>
-</nav>

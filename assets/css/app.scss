@@ -1,13 +1,30 @@
 /* This file is for your main application css. */
 
-@import "./phoenix.css";
+@import "./bem";
+@import "./buttons";
 @import "./colours.css";
-@import "./home.css";
-@import "./common.css";
-@import "./comments.css";
-@import "./resources.css";
-@import "./search.css";
-@import "./start.css";
-@import "./events.css";
+@import "./headers";
+
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything();
+@import "./nav";
+
+
+body {
+    header {
+        background: white;
+    }
+    background: var(--plain-bg-colour);
+
+    .alert {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: center;
+        background: var(--warning);
+
+        @include modifier(danger) {
+            background: var(--error);
+            color: white;
+        }
+    }
+}

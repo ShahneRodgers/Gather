@@ -4,7 +4,9 @@
     --secondary-bg-colour: #3D5A80;
     --text-dark-colour: #98C1D9;
     --text-light-colour: #E0FBFC;
-    --accent-colour: #D53711; /* Nicer, but not accessible: #EE6C4D; */
+    --accent-colour: #D04913; /* Nicer, but not accessible: #EE6C4D; */
     --light-grey: #D8D8D8;
+    --warning: #ffffb3;
+    --error: #f44336;
 }
 
