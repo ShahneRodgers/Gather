@@ -9,6 +9,8 @@
 @include foundation-everything();
 @import "./nav";
 
+// CSS for individual pages 
+@import "./login";
 
 body {
     header {

@@ -1,0 +1,22 @@
+.login {
+    @include headers;
+
+    @include element(form) {
+        margin-bottom: 2rem;
+
+        @include element(button) {
+            @include gather-button;
+            padding: 0.5rem 1.2rem;
+        }
+    }
+
+    @include element(note) {
+        font-weight: bold;
+    }
+
+    @include element(warning) {
+        background-color: var(--warning);
+        margin: 2rem -0.5rem;
+        padding: 0.5rem;
+    }
+}
