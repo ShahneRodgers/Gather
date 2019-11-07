@@ -1,0 +1,54 @@
+.contact {
+    @include element(header) {
+        @include header-background;
+        padding: 2rem 0;
+        .grid-container {
+            margin: auto;
+        }
+    }
+
+    @include element(form) {
+        margin: 2rem;
+
+        label {
+            color: black;
+            background: none;
+            padding: 0.3rem 0;
+        }
+
+        textarea {
+            min-height: 10rem;
+        }
+
+        @include element(button) {
+            @include gather-button;
+        }
+    }
+
+    hr {
+        margin: 3rem 0 2rem;
+        max-width: 100%;
+    }
+
+    @include element(about) {
+        margin-bottom: 3rem;
+
+        @include element(title) {
+            color: var(--secondary-bg-colour);
+            font-weight: bold;
+        }
+
+        @include element(team) {
+            color: var(--main-bg-colour);
+            font-weight: bold;
+        }
+
+        @include element(thanks) {
+            margin-bottom: 2rem;
+
+            @include element(details) {
+                width: 90vw;
+            }
+        }
+    }
+}

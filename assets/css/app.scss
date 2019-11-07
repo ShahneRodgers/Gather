@@ -1,9 +1,9 @@
 /* This file is for your main application css. */
 
-@import "./bem";
-@import "./buttons";
+@import "./mixins/bem";
+@import "./mixins/buttons";
 @import "./colours.css";
-@import "./headers";
+@import "./mixins/headers";
 @import "./zindices";
 
 @import "~foundation-sites/scss/foundation";
@@ -11,8 +11,9 @@
 @import "./nav";
 
 // CSS for individual pages 
-@import "./login";
+@import "./contact";
 @import "./home";
+@import "./login";
 
 body {
     header {
@@ -30,5 +31,21 @@ body {
             background: var(--error);
             color: white;
         }
+    }
+
+    // Make links accessible
+    a {
+        color: var(--secondary-bg-colour);
+        font-weight: bold;
+
+        &:hover, &:active, &:focus {
+            text-decoration: underline;
+            font-size: 1.2rem;
+        }
+    }
+
+    // Hide the dropdown on select for Firefox since Foundation doesn't seem to.
+    select {
+        -moz-appearance: none;
     }
 }

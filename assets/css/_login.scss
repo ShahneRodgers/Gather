@@ -1,6 +1,4 @@
 .login {
-    @include headers;
-
     @include element(form) {
         margin-bottom: 2rem;
 

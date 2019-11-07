@@ -1,8 +1,7 @@
 .home {
-    width: 100%;
-    background-color: var(--main-bg-colour);
-    z-index: $home-background-zindex;
+    @include header-background;
     height: 90vh;
+    z-index: $home-background-zindex;
 
     @include element(image) {
         background-image: url(/images/welcome.svg);
@@ -23,34 +22,6 @@
         z-index: $home-content-zindex;
         vertical-align: middle;
         margin: auto;
-
-        @include element(title) {
-            color: var(--text-light-colour);
-            font-weight: 900;
-
-            line-height: 2.1rem;
-            font-size: 2rem;
-
-            @include breakpoint(medium up) {
-                line-height: 5.5rem;
-                font-size: 5rem;
-            }
-
-            margin: 0;
-        }
-
-        @include element(subtitle) {
-            color: var(--text-dark-colour);
-            margin-bottom: 2rem;
-            font-weight: 700;
-
-            font-size: 1.5rem;
-            line-height: 1.6rem;
-            @include breakpoint(medium up) {
-                font-size: 2.5rem;
-                line-height: 2.6rem;
-            }
-        }
 
         @include element(button) {
             @include gather-button;

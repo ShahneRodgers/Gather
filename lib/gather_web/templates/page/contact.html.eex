@@ -1,57 +1,66 @@
-<section class="contact background2">
-    <h2><%= gettext "Contact" %></h2>
-    <h3><%= gettext """
-                Are you a refugee who wants to access this site? 
-                Or do you just want to know more? Email us!
-                """ %></h3>
-    <div class="contact">
-    <%= form_for @conn, "mailto:gather.techfugees@gmail.com", [method: "get", csrf_token: false, target: "_blank", rel: "noopener noreferrer", enctype: "multipart/form-data"], fn f -> %>
-        <div class="form-group">
+<div class="contact">
+    <div class="contact__header grid-frame">
+        <div class="grid-container">
+            <h1><%= gettext "Contact" %></h1>
+            <h2><%= gettext """
+                        Are you a refugee who wants to access this site? 
+                        Or do you just want to know more? Email us!
+                        """ %>
+            </h2>
+        </div>
+    </div>
+    <%= form_for @conn, "mailto:gather.techfugees@gmail.com", [method: "get", csrf_token: false, target: "_blank", rel: "noopener noreferrer", enctype: "multipart/form-data", class: "contact__form grid-container grid-x"], fn f -> %>
+        <div class="form-group cell">
             <%= label f, :subject, "Where are you living?", class: "label" %>
             <%= select f, :subject, @regions, class: "form-control" %>
         </div>
 
-        <div class="form-group">
+        <div class="form-group cell">
             <%= label f, :body, "Message:", class: "label" %>
             <%= textarea f, :body, value: "Hi,\n\nI'm interested in joining Gather.\n\nRegards,\n<name>", class: "form-control" %>
         </div>
 
-        <%= submit gettext("Email us"), class: "form-control" %>
+        <%= submit gettext("Email us"), class: "form-control contact__form__button" %>
     <% end %>
-    </div>
-    
-</section>
 
-<h2><%= gettext "About" %></h2>
-<p><%= gettext """
-Resources for refugees arriving in New Zealand are spread over many
-different government websites so they're hard to find - and often hard to
-understand, even for native English speakers! They are given some support from
-groups such as the Red Cross, but this is limited and often ends before a refugee
-is fully settled.
-""" %></p>
-<p><%= gettext """
-%{name} is intended to be a community-focused website which collates external links and 
-allowing refugees to share and promote the sources they've found useful, to translate 
-advice into their native languages and to offer to support newcomers once they've been
-through the process.
-""", name: "Gather" %></p>
-<p>
-<%= gettext("This website was created by %{teamname} as a result of the %{techfugees} hackathon",
-    teamname: "<i>ByDefault</i>",
-    techfugees: "<a href=\"https://techfugees.com/techfugees-new-zealand-%F0%9F%87%B3%F0%9F%87%BF/\">Techfugees NZ</a>"
-    ) |> raw() %>
-</p>
-<div>Icons made by:
-    <ul>
-    <li><a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a></li>
-    <li><a href="https://www.flaticon.com/authors/srip" title="srip">srip</a></li>
-    <li><a href="https://www.flaticon.com/authors/zlatko-najdenovski" title="Zlatko Najdenovski">Zlatko Najdenovski</a> </li>
-    <li><a href="https://www.freepik.com/" title="Freepik">Freepik</a></li>
-    <li><a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a></li>
-    <li><a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a></li>
-    <li><a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> </li>
-    <li><a href="https://www.flaticon.com/authors/maxim-basinski" title="Maxim Basinski">Maxim Basinski</a></li>
-    </ul>
-from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> and licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0</a>
+    <hr/>
+
+    <div class="contact__about grid-container">
+        <h1 class="contact__about__title"><%= gettext "About" %></h1>
+        <p><%= gettext """
+        Resources for refugees arriving in New Zealand are spread over many
+        different government websites so they're hard to find - and often hard to
+        understand, even for native English speakers! They are given some support from
+        groups such as the Red Cross, but this is limited and often ends before a refugee
+        is fully settled.
+        """ %></p>
+        <p><%= gettext """
+        %{name} is intended to be a community-focused website which collates external links and 
+        allowing refugees to share and promote the sources they've found useful, to translate 
+        advice into their native languages and to offer to support newcomers once they've been
+        through the process.
+        """, name: "Gather" %></p>
+        <p>
+        <%= gettext("This website was created by %{teamname} as a result of the %{techfugees} hackathon",
+            teamname: "<i class='contact__about__team'>ByDefault</i>",
+            techfugees: "<a href=\"https://techfugees.com/techfugees-new-zealand-%F0%9F%87%B3%F0%9F%87%BF/\">Techfugees NZ</a>"
+            ) |> raw() %>
+        </p>
+        <div class="contact__about__thanks" data-toggle="example-dropdown">
+            <a role="button">Icons made by</a>
+            <div class="content__about_thanks__details dropdown-pane" id="example-dropdown" data-dropdown>
+                <ul>
+                <li><a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a></li>
+                <li><a href="https://www.flaticon.com/authors/srip" title="srip">srip</a></li>
+                <li><a href="https://www.flaticon.com/authors/zlatko-najdenovski" title="Zlatko Najdenovski">Zlatko Najdenovski</a> </li>
+                <li><a href="https://www.freepik.com/" title="Freepik">Freepik</a></li>
+                <li><a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a></li>
+                <li><a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a></li>
+                <li><a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> </li>
+                <li><a href="https://www.flaticon.com/authors/maxim-basinski" title="Maxim Basinski">Maxim Basinski</a></li>
+                </ul>
+            from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> and licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0</a>
+            </div>
+        </div>
+    </div>
 </div>
