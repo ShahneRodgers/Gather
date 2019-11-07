@@ -13,6 +13,10 @@
             text-decoration: none;
             color: $black;
             font-weight: normal;
+
+            &:hover, &:focus, &:active {
+                font-size: 1rem;
+            }
         }
 
         select {
@@ -26,4 +30,6 @@
     @include element(button) {
         @include gather-button;
     }
+
+    border-bottom: 1px solid var(--light-grey);
 }

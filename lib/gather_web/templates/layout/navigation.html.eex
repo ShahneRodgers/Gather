@@ -10,7 +10,7 @@
         </select>
     </li>
     <%= if not is_nil(user) and user.is_leader do %>
-        <%= render "admin.html", assigns %>
+        <li><%= render "admin.html", assigns %></li>
     <% end %>
     <li><a href="<%= Routes.task_path(@conn, :index)%>"><%= Gettext.gettext "Get Started" %></a></li>
     <li><a href="<%= Routes.resources_path(@conn, :index)%>"><%= Gettext.gettext "Resources" %></a></li>

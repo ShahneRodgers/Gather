@@ -46,9 +46,9 @@
             techfugees: "<a href=\"https://techfugees.com/techfugees-new-zealand-%F0%9F%87%B3%F0%9F%87%BF/\">Techfugees NZ</a>"
             ) |> raw() %>
         </p>
-        <div class="contact__about__thanks" data-toggle="example-dropdown">
+        <div class="contact__about__thanks" data-toggle="icon-dropdown">
             <a role="button">Icons made by</a>
-            <div class="content__about_thanks__details dropdown-pane" id="example-dropdown" data-dropdown>
+            <div class="content__about_thanks__details dropdown-pane" id="icon-dropdown" data-dropdown>
                 <ul>
                 <li><a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a></li>
                 <li><a href="https://www.flaticon.com/authors/srip" title="srip">srip</a></li>

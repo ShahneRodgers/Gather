@@ -1,9 +1,7 @@
-<li class="dropdown">
-    <%= gettext "Admin" %>
-    <div class="dropdown-content">
-        <%= link gettext("Manage users"), to: Routes.user_path(@conn, :index) %>
-        <%= link gettext("Create start task"), to: Routes.task_path(@conn, :new) %>
-        <%= link gettext("Add subtask"), to: Routes.task_path(@conn, :new_subtask) %>
-        <%= link gettext("Add resource to subtask"), to: Routes.task_path(@conn, :new_resource) %>
-    </div>
-</li>
+<%= gettext "Admin" %>
+<ul  class="menu">
+    <li><%= link gettext("Manage users"), to: Routes.user_path(@conn, :index) %></li>
+    <li><%= link gettext("Create start task"), to: Routes.task_path(@conn, :new) %></li>
+    <li><%= link gettext("Add subtask"), to: Routes.task_path(@conn, :new_subtask) %></li>
+    <li><%= link gettext("Add resource to subtask"), to: Routes.task_path(@conn, :new_resource) %></li>
+</ul>

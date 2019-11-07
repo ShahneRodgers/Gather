@@ -10,7 +10,7 @@
   </head>
   <body>
     <header>
-      <ul class="nav menu">
+      <ul class="nav dropdown menu" data-dropdown-menu>
         <li>
           <a href="/" class="nav__logo">
             <img src="<%= Routes.static_path(@conn, "/images/logo.png") %>" alt="Gather Logo"/>
