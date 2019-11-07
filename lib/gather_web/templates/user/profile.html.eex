@@ -1,81 +1,92 @@
-<section class="profile background2">
-  <h1><%= gettext "Hi, %{name}!", name: @user.nickname || @user.name %></h1>
-  <h2><%= gettext "Welcome to New Zealand!" %></h2>
-</section>
+<div class="profile grid-container">
+  <div class="profile__header">
+    <h1><%= gettext "Hi, %{name}!", name: @user.nickname || @user.name %></h1>
+    <h2><%= gettext "Welcome to New Zealand!" %></h2>
+  </div>
 
-<%= form_for @changeset, Routes.user_path(@conn, :update_details), fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+  <%= form_for @changeset, Routes.user_path(@conn, :update_details), [class: "profile__form", "data-abide": true], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <div class="profile__form__group">
+      <%= label f, :nickname, gettext("Nickname") %>
+      <%= text_input f, :nickname, required: true %>
+      <%= error_tag f, :nickname %>
+    </div>  
+
+    <div class="profile__form__group">
+      <%= label f, :email, gettext("Email address") %>
+      <%= email_input f, :email, required: true %>
+      <%= error_tag f, :email %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, "password", gettext("New password") %>
+      <%= password_input f, "password" %>
+      <%= error_tag f, :password %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, :arrival, gettext("Arrival date") %>
+      <div class="profile__form__group__date grid-x grid-margin-x">
+        <%= date_select f, :arrival, year: [options: 1900..DateTime.utc_now.year(), class: "cell auto", "aria-label": "year"], month: [class: "cell auto"], day: [class: "cell auto"] %>
+      </div>
+      <%= error_tag f, :arrival %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, :region, gettext("Where will you be living?") %>
+      <%= select f, :region, @regions, prompt: gettext "Where are you living?" %>
+      <%= error_tag f, :region %>
+    </div>
+
+    <div class="grid-x grid-margin-x">
+      <%= label f, gettext("Who did you arrive with?"), class: "cell medium-6" %>
+      <%= inputs_for f, :relationships, [append: [%Relationship{}]], fn fi -> %>
+        <%= hidden_input fi, :user_id, value: @user.id %>
+        <%= label f, gettext("Relationship"), class: "cell medium-6" %>
+        <%= text_input fi, :type, class: "cell medium-6", "aria-label": "relationship name" %>
+        <%= error_tag fi, :type %>
+        <%= text_input fi, :name, class: "cell medium-6", "aria-label": "relationship name" %>
+        <%= error_tag fi, :name %>
+      <% end %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, :english_level, gettext("English Language Proficiency") %>
+      <%= number_input f, :english_level, min: 1, max: 5 %>
+      <%= error_tag f, :english_level %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, :english_school, gettext("English school") %>
+      <%= text_input f, :english_school %>
+      <%= error_tag f, :english_school %>
+    </div>
+
+    <div class="profile__form__group">
+      <%= label f, gettext("Which languages do you speak?") %>
+      <%= inputs_for f, :languages, [append: [%Language{}]], fn fi -> %>
+        <%= hidden_input fi, :user_id, value: @user.id %>
+        <%= text_input fi, :language, "aria-label": "language" %>
+        <%= error_tag fi, :language %>
+      <% end %>
+    </div>
+
+    <div class="profile__form__terms">
+      <input type="checkbox" required>
+      I agree to the <a role="button" data-toggle="terms-dropdown">terms and conditions</a>
+      <div class="profile__form__terms__details dropdown-pane" id="terms-dropdown" data-dropdown>
+        This site is still in development; personal details may be publically exposed and/or deleted
+        at any time. Please don't provide any private or important information.
+      </div>
+    </div>
+
+    <div class="profile__form__group">
+      <%= submit gettext("Submit"), class: "profile__form__group__button" %>
     </div>
   <% end %>
-
-  <div class="form-group">
-    <%= label f, gettext("Nickname"), class: "control-label" %>
-    <%= text_input f, :nickname, class: "form-control" %>
-    <%= error_tag f, :nickname %>
-  </div>  
-
-  <div class="form-group">
-    <%= label f, gettext("Email address"), class: "control-label" %>
-    <%= email_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("New password"), class: "control-label" %>
-    <%= password_input f, "password", class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("Arrival date"), class: "control-label" %>
-    <div class="form-control date">
-      <%= date_select f, :arrival, year: [options: 1900..DateTime.utc_now.year()] %>
-    </div>
-    <%= error_tag f, :arrival %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("Where will you be living?"), class: "control-label" %>
-    <%= select f, :region, @regions, prompt: gettext "Where are you living?", class: "form-control" %>
-    <%= error_tag f, :region %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("Who did you arrive with?"), class: "control-label" %>
-    <%= inputs_for f, :relationships, [append: [%Relationship{}]], fn fi -> %>
-      <%= hidden_input fi, :user_id, value: @user.id %>
-      <%= label f, gettext("Relationship"), class: "control-label inner-label" %>
-      <%= text_input fi, :type, class: "form-control" %>
-      <%= error_tag fi, :type %>
-      <%= text_input fi, :name, class: "form-control" %>
-      <%= error_tag fi, :name %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("English Language Proficiency"), class: "control-label" %>
-    <%= number_input f, :english_level, class: "form-control" %>
-    <%= error_tag f, :english_level %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("English school"), class: "control-label" %>
-    <%= text_input f, :english_school, class: "form-control" %>
-    <%= error_tag f, :english_school %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, gettext("Which languages do you speak?"), class: "control-label" %>
-    <%= inputs_for f, :languages, [append: [%Language{}]], fn fi -> %>
-      <%= hidden_input fi, :user_id, value: @user.id %>
-      <%= text_input fi, :language, class: "form-control" %>
-      <%= error_tag fi, :language %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= submit gettext("Submit"), class: "btn btn-main" %>
-  </div>
-<% end %>
+</div>

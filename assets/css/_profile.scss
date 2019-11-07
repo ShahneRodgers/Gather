@@ -1,0 +1,29 @@
+.profile {
+
+    @include element(header) {
+        margin: 2.5rem 0;
+
+        h1 {
+            font-size: 2rem;
+        }
+    
+        h2 {
+            font-size: 1.7rem;
+        }
+    }
+
+    @include element(form) {
+        @include element(group) {
+            margin: 1.5rem 0;
+
+            @include element(date) {
+                font-size: 2.5rem;
+                line-height: 2.5rem;
+            }
+
+            @include element(button) {
+                @include gather-button;
+            }
+        }
+    }
+}
