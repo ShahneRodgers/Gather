@@ -2,4 +2,10 @@
     border-radius: 1.5rem;
     background-color: var(--accent-colour) !important;
     color: white !important;
+    padding: 0.5rem 1.2rem;
+
+    @include modifier(secondary) {
+        background-color: var(--light-grey) !important;
+        color: $black !important;
+    }
 }

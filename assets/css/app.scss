@@ -4,6 +4,7 @@
 @import "./buttons";
 @import "./colours.css";
 @import "./headers";
+@import "./zindices";
 
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything();
@@ -11,6 +12,7 @@
 
 // CSS for individual pages 
 @import "./login";
+@import "./home";
 
 body {
     header {

@@ -1,9 +1,9 @@
-<section class="home">
-  <div class="words"></div>
-  <div class="content">
-    <h1><%= gettext "Welcome to %{name}!", name: "Gather" %></h1>
-    <h2>A community focused website for everything that refugees need.</h2>
-    <a class="btn btn-main" href="<%= Routes.authentication_path(@conn, :login) %>">Login</a>
-    <a class="btn btn-other" href="<%= Routes.page_path(@conn, :contact) %>">Don't have an account?</a>
+<section class="home grid-y grid-frame">
+  <div class="home__image"></div>
+  <div class="home__content grid-container">
+    <h1 class="home__content__title"><%= gettext "Welcome to %{name}!", name: "Gather" %></h1>
+    <h2 class="home__content__subtitle">A community focused website for everything that refugees need.</h2>
+    <a class="home__content__button" href="<%= Routes.authentication_path(@conn, :login) %>">Login</a>
+    <a class="home__content__button home__content__button--secondary" href="<%= Routes.page_path(@conn, :contact) %>">Don't have an account?</a>
   </div>
 </section>
